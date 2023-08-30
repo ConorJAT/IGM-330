@@ -7,6 +7,13 @@
     <title>Greeter</title>
     <style>
       *{font-size:1.5em;}
+
+      button
+      {
+        height: 50px;
+        width: 100px;
+        font-size: 14pt;
+      }
     </style>
 
     <script>
@@ -23,16 +30,17 @@
       // 3 - create a `sayHello()` function
       function sayHello()
       {
-          // 3A - get name of person from the <input>
-          let name = document.querySelector("input").value;
+        // 3A - get name of person from the <input>
+        let f_name = document.querySelector("#input-firstname").value;
+        let l_name = document.querySelector("#input_lastname").value;
 
-          // 3B - get a reference to the #output <p>
-          let out = document.querySelector("#output");
+        // 3B - get a reference to the #output <p>
+        let out = document.querySelector("#output");
 
-          // 3C - update HTML of #output <p>
-          out.innerHTML = "Hello, " + name + "!";
-
-          // document.querySelector("#output").innerHTML = "Hello, " + name + "!";
+        // 3C - update HTML of #output <p>
+        out.innerHTML = "Hello, " + f_name + " " + l_name + "!";
+        
+        // document.querySelector("#output").innerHTML = "Hello, " + name + "!";
       }
     });
     </script>
@@ -41,7 +49,8 @@
 
 <body>
   <button>Click Me!</button>
-  <input id="input-firstname" placeholder="Type in your name">
+  <input id="input-firstname" placeholder="Type in your first name">
+  <input id="input_lastname" placeholder="Type in your last name">
   <p id="output">???</p>
 </body>
 
