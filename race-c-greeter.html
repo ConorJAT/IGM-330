@@ -5,46 +5,81 @@
     
     <meta charset="utf-8" />
     <title>Greeter</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Osmanya&display=swap" rel="stylesheet">
+
     <style>
-      *{font-size:1.5em;}
+      *
+      {
+        font-size: 1.5em;
+        font-family: "Noto Sans Osmanya";
+      }
 
       button
       {
         height: 50px;
-        width: 100px;
+        width: 150px;
         font-size: 14pt;
+      }
+
+      @media only screen and (min-width: 1024px)
+      {
+        body
+        {
+          background-color: red;
+          padding: 100px;
+        }
       }
     </style>
 
     <script>
     "use strict";
 
+    // window.onload = init;  OR  window.addEventLister("load", init);
+    // function init() { // Code goes here! };
+
     document.addEventListener("DOMContentLoaded", () => 
     {
       // 1 - get a reference to the button
+      // Type Selector
       let button = document.querySelector("button");
 
       // 2 - add a click event to button that calls a `sayHello` function
+      // Event Handler - button.onclick = sayHello;
+      // Anon Function - button.onclick = function() { alert("Surprise!"); }
+      // Event Listener
       button.addEventListener("click", sayHello);
 
       // 3 - create a `sayHello()` function
+      // () - Invocation Operator
       function sayHello()
       {
         // 3A - get name of person from the <input>
-        let f_name = document.querySelector("#input-firstname").value;
-        let l_name = document.querySelector("#input_lastname").value;
+        let f_name = document.querySelector("#input-firstname").value.trim() || "Peter";
+        // if (f_name == "") f_name = "Peter";
+        // if (!f_name) f_name = "Peter";
+
+        let l_name = document.querySelector("#input_lastname").value.trim() || "Parker";
+        // if (l_name == "") l_name = "Parker";
+        // if (!l_name) l_name = "Parker";
+
 
         // 3B - get a reference to the #output <p>
         let out = document.querySelector("#output");
 
         // 3C - update HTML of #output <p>
-        out.innerHTML = "Hello, " + f_name + " " + l_name + "!";
+        // out.textContent = `Hello,  ${f_name}  ${l_name}!`; - Ignores any HTML Tags
+        out.innerHTML = `Hello,  ${f_name}  ${l_name}!`; // Template String
         
         // document.querySelector("#output").innerHTML = "Hello, " + name + "!";
 
         out.style.color = "red";
-        out.style.background = "yellow";
+        out.style.backgroundColor = "yellow";
       }
+
+      // const sayHello2 = () => { console.log("Hello World!"); };
     });
     </script>
 
