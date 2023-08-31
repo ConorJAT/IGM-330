@@ -42,15 +42,23 @@
 
     document.addEventListener("DOMContentLoaded", () => 
     {
+      document.querySelector("#output").style.color = "red";
+      document.querySelector("#output").style.backgroundColor = "yellow";
+
       // 1 - get a reference to the button
       // Type Selector
-      let button = document.querySelector("button");
+      let hi_btn = document.querySelector("#btn-hello");
+      let bye_btn = document.querySelector("#btn-goodbye");
 
       // 2 - add a click event to button that calls a `sayHello` function
       // Event Handler - button.onclick = sayHello;
       // Anon Function - button.onclick = function() { alert("Surprise!"); }
       // Event Listener
-      button.addEventListener("click", sayHello);
+      // hi_btn.addEventListener("click", sayHello);
+      // bye_btn.addEventListener("click", sayGoodbye);
+
+      hi_btn.addEventListener("click", greet);
+      bye_btn.addEventListener("click", greet);
 
       // 3 - create a `sayHello()` function
       // () - Invocation Operator
@@ -72,11 +80,27 @@
         // 3C - update HTML of #output <p>
         // out.textContent = `Hello,  ${f_name}  ${l_name}!`; - Ignores any HTML Tags
         out.innerHTML = `Hello,  ${f_name}  ${l_name}!`; // Template String
-        
-        // document.querySelector("#output").innerHTML = "Hello, " + name + "!";
+      }
 
-        out.style.color = "red";
-        out.style.backgroundColor = "yellow";
+      function sayGoodbye()
+      {
+        let f_name = document.querySelector("#input-firstname").value.trim() || "Peter";
+        let l_name = document.querySelector("#input_lastname").value.trim() || "Parker";
+
+        let out = document.querySelector("#output");
+
+        out.innerHTML = `Goodbye,  ${f_name}  ${l_name}!`;
+      }
+
+      function greet(greeting)
+      {
+        let f_name = document.querySelector("#input-firstname").value.trim() || "Peter";
+        let l_name = document.querySelector("#input_lastname").value.trim() || "Parker";
+
+        let out = document.querySelector("#output");
+
+        if (this.getAttribute("id") == "btn-hello") out.innerHTML = `Hello,  ${f_name}  ${l_name}!`;
+        else if (this.getAttribute("id") == "btn-goodbye") out.innerHTML = `Goodbye,  ${f_name}  ${l_name}!`;
       }
 
       // const sayHello2 = () => { console.log("Hello World!"); };
@@ -86,7 +110,9 @@
   </head>
 
 <body>
-  <button>Click Me!</button>
+  <button id="btn-hello">Say Hello!</button>
+  <button id="btn-goodbye">Say Goodbye!</button>
+  <hr>
   <input id="input-firstname" placeholder="Type in your first name">
   <input id="input_lastname" placeholder="Type in your last name">
   <p id="output">???</p>
