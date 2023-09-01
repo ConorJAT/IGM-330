@@ -57,8 +57,8 @@
       // hi_btn.addEventListener("click", sayHello);
       // bye_btn.addEventListener("click", sayGoodbye);
 
-      hi_btn.addEventListener("click", greet);
-      bye_btn.addEventListener("click", greet);
+      hi_btn.addEventListener("click", function () { greet("Hello"); });
+      bye_btn.addEventListener("click", function () { greet("Goodbye"); });
 
       // 3 - create a `sayHello()` function
       // () - Invocation Operator
@@ -99,8 +99,7 @@
 
         let out = document.querySelector("#output");
 
-        if (this.getAttribute("id") == "btn-hello") out.innerHTML = `Hello,  ${f_name}  ${l_name}!`;
-        else if (this.getAttribute("id") == "btn-goodbye") out.innerHTML = `Goodbye,  ${f_name}  ${l_name}!`;
+        out.innerHTML = `${greeting},  ${f_name}  ${l_name}!`;
       }
 
       // const sayHello2 = () => { console.log("Hello World!"); };
