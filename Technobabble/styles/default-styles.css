@@ -3,7 +3,7 @@ h1
     font-family: 'Exo 2';
 }
 
-#output, #myButton
+#output, #myButton, #giveMe5
 {
     font-family: monospace;
 }
@@ -23,7 +23,7 @@ h1
 
 #giveMe5
 {
-    width: 250px;
+    width: 220px;
     height: 40pt;
     font-size: 16pt;
     border-radius: 8px;
@@ -134,7 +134,7 @@ h1
     
     #myButton
     {
-        width: 250px;
+        width: 220px;
         height: 40pt;
         font-size: 16pt;
     }
@@ -150,7 +150,7 @@ h1
 
     #giveMe5
     {
-        display: inline-flex;
+        display: inline;
     }
 
 }
