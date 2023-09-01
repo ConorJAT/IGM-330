@@ -16,13 +16,27 @@
 	    const words2 = ["Propulsion", "Dissipation", "Sensor", "Improbability", "Buffer", "Graviton", "Replicator", "Matter", "Anti-matter", "Organic", "Power", "Silicon", "Holographic", "Transient", "Integrity", "Plasma", "Fusion", "Control", "Access", "Auto", "Destruct", "Isolinear", "Transwarp", "Energy", "Medical", "Environmental", "Coil", "Impulse", "Warp", "Phaser", "Operating", "Photon", "Deflector", "Integrity", "Control", "Bridge", "Dampening", "Display", "Beam", "Quantum", "Baseline", "Input"];
 	    const words3 = ["Chamber", "Interface", "Coil", "Polymer", "Biosphere", "Platform", "Thruster", "Deflector", "Replicator", "Tricorder", "Operation", "Array", "Matrix", "Grid", "Sensor", "Mode", "Panel", "Storage", "Conduit", "Pod", "Hatch", "Regulator", "Display", "Inverter", "Spectrum", "Generator", "Cloud", "Field", "Terminal", "Module", "Procedure", "System", "Diagnostic", "Device", "Beam", "Probe", "Bank", "Tie-In", "Facility", "Bay", "Indicator", "Cell"];
 
+		// Get reference to the button.
         const btn = document.querySelector("#myButton");
+
+		// Add 'click' event listener to button -> Generate a babble.
         btn.addEventListener("click", generate);
 
+		// Generate the babble.
         function generate()
         {
-            
+			// Form babble using a template string.
+            let babble = `${words1[getRandom(words1.length)]} ${words2[getRandom(words2.length)]} ${words3[getRandom(words3.length)]}`;
+
+			// Get reference and change the text of the paragraph element.
+			document.querySelector("#output").innerHTML = babble;
         }
+
+		// Return a random int based on an array length parameter.
+		function getRandom(arrLength)
+		{
+			return Math.floor(Math.random() * arrLength);
+		}
     
 	    console.log(words1[0]);
     };
