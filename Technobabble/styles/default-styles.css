@@ -21,6 +21,14 @@ h1
     border-radius: 8px;
 }
 
+#giveMe5
+{
+    width: 250px;
+    height: 40pt;
+    font-size: 16pt;
+    border-radius: 8px;
+}
+
 /* Custom Ancient Android CSS Breakpoint */
 @media only screen and (min-width: 240px)
 {
@@ -51,6 +59,11 @@ h1
     #output
     {
         text-align: center;
+    }
+
+    #giveMe5
+    {
+        display: none;
     }
 }
 
@@ -125,4 +138,19 @@ h1
         height: 40pt;
         font-size: 16pt;
     }
+}
+
+@media only screen and (min-width: 1408px)
+{
+    h1
+    {
+        font-size: 3.6rem;
+        background-color: #e0a1cb;
+    }
+
+    #giveMe5
+    {
+        display: inline-flex;
+    }
+
 }
