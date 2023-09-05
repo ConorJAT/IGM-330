@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    
+    <meta charset="utf-8" />
+    <title>Greeter</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Osmanya&display=swap" rel="stylesheet">
+
+    <style>
+      *
+      {
+        font-size: 1.5em;
+        font-family: "Noto Sans Osmanya", sans-serif;
+      }
+
+      button, label
+      {
+        height: 50px;
+        width: 150px;
+        font-size: 14pt;
+      }
+
+      @media only screen and (min-width: 1024px)
+      {
+        body
+        {
+          background-color: red;
+          padding: 100px;
+        }
+      }
+    </style>
+
+    <script>
+    "use strict";
+
+    document.addEventListener("DOMContentLoaded", () => 
+    {
+      document.querySelector("#output").style.color = "red";
+      document.querySelector("#output").style.backgroundColor = "yellow";
+
+      // 1 - get references to the buttons
+      // Type Selector
+      let btn_hi = document.querySelector("#btn-hello");
+      let btn_bye = document.querySelector("#btn-goodbye");
+
+      // 1B - get reference to the checkbox
+      let check_shout = document.querySelector("#check-shout");
+
+      // 2 - add a click event to button that calls a `sayHello` function
+      // Function Wrappers
+      btn_hi.addEventListener("click", () => greet("Hello"));
+      btn_bye.addEventListener("click", () => greet("Goodbye"));
+
+      // 3 - create a `greet()` function
+      const greet = (greeting) => {
+        // 3A - get name of person from the <input>
+        let f_name = document.querySelector("#input-firstname").value.trim() || "Peter";
+        let l_name = document.querySelector("#input_lastname").value.trim() || "Parker";
+
+        // 3B - get a reference to the #output <p>
+        let out = document.querySelector("#output");
+
+        // 3C - update HTML of #output <p>
+        if (check_shout.checked) out.innerHTML = `${greeting},  ${f_name}  ${l_name}!`.toUpperCase();
+        else out.innerHTML = `${greeting},  ${f_name}  ${l_name}!`
+      };
+    });
+
+    </script>
+
+  </head>
+
+<body>
+  <button id="btn-hello">Say Hello!</button>
+  <button id="btn-goodbye">Say Goodbye!</button>
+  <input type="checkbox" id="check-shout"><label>Shoutify!</label>
+  <hr>
+  <input id="input-firstname" placeholder="Type in your first name">
+  <input id="input_lastname" placeholder="Type in your last name">
+  <p id="output">???</p>
+</body>
+
+</html>
