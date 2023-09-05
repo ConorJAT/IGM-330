@@ -57,8 +57,11 @@
       // hi_btn.addEventListener("click", sayHello);
       // bye_btn.addEventListener("click", sayGoodbye);
 
-      hi_btn.addEventListener("click", function () { greet("Hello"); });
-      bye_btn.addEventListener("click", function () { greet("Goodbye"); });
+      // Function Wrappers
+      // hi_btn.addEventListener("click", function () { greet("Hello"); });
+      // bye_btn.addEventListener("click", function () { greet("Goodbye"); });
+      hi_btn.addEventListener("click", () => greet("Hello"));
+      bye_btn.addEventListener("click", () => greet("Goodbye"));
 
       // 3 - create a `sayHello()` function
       // () - Invocation Operator
@@ -68,6 +71,7 @@
         let f_name = document.querySelector("#input-firstname").value.trim() || "Peter";
         // if (f_name == "") f_name = "Peter";
         // if (!f_name) f_name = "Peter";
+        // f_name = f_name ? f_name : "Peter";
 
         let l_name = document.querySelector("#input_lastname").value.trim() || "Parker";
         // if (l_name == "") l_name = "Parker";
