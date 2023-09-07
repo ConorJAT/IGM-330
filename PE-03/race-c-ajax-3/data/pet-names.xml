@@ -2,4 +2,5 @@
 <petnames>
   <namelist cid="dognames">Bella,Luna,Charlie,Lucy,Cooper,Max,Bailey,Daisy,Sadie,Lola,Buddy,Molly,Stella,Tucker,Bear,Zoey,Duke,Harley,Maggie,Jax</namelist>
   <namelist cid="catnames">Oliver,Leo,Milo,Charlie,Simba,Max,Jack,Loki,Tiger,Jasper,Ollie,Oscar,George,Buddy,Toby,Smokey,Finn,Felix,Simon,Shadow</namelist>
+  <namelist cid="birdnames">Angel,Baby,BB,Buddy,Charlie,Coco,Daisy,Kiwi,Mango,Max,Pepper,Pikachu,Skittles,Sunny,Tweety,Bobo,Calypso,Chive,Chantey,Couscous</namelist>
 </petnames>

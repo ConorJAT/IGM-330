@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-	<title>XHR - Load Text</title>
+	<title>XHR - Load XML</title>
 	<style>
 	body{
 	  font-family: sans-serif;
@@ -22,32 +22,31 @@
 	<p id="output">Click button to load</p>
 	
 <script>
-    document.querySelector("#my-button").onclick = loadTextXHR;
+    document.querySelector("#my-button").onclick = loadXmlXHR;
 
-    function loadTextXHR()
+    function loadXmlXHR()
     {
         const url = "data/pet-names.xml";
         const xhr = new XMLHttpRequest();
 
         xhr.onload = (e) => {
             console.log(`In onload - HTTP Status Code - ${e.target.status}`);
-            const text = e.target.responseText;
-            console.log(`Success - The file is ${text.length}`);
+            const xml = e.target.responseXML;
 
-            // const lines = text.split("\n");
-            // const dognames = lines[0].split(",");
-            // const catname = lines[1].split(",");
+            // XML Guard Code:
+            if (!xml){
+                document.querySelector("#output").innerHTML = "XML is null!";
+                return;
+            }
 
-            // Array Destructoring:
-            let [dognames, catnames, birdnames] = text.split("\n");
-            dognames = dognames.split(",");
-            catnames = catnames.split(",");
-            birdnames = birdnames.split(",");
+            const dogNames = xml.querySelector("namelist[cid='dognames']").textContent.split(",");
+            const catNames = xml.querySelector("namelist[cid='catnames']").textContent.split(",");
+            const birdNames = xml.querySelector("namelist[cid='birdnames']").textContent.split(",");
 
-            let html_dog = `<ol>${dognames.map((name) => `<li>${name}</li>`).join("")}</ol>`;
-            let html_cat = `<ol>${catnames.map((name) => `<li>${name}</li>`).join("")}</ol>`;
-            let html_bird = `<ol>${birdnames.map((name) => `<li>${name}</li>`).join("")}</ol>`;
-
+            let html_dog = `<ol>${dogNames.map((name) => `<li>${name}</li>`).join("")}</ol>`;
+            let html_cat = `<ol>${catNames.map((name) => `<li>${name}</li>`).join("")}</ol>`;
+            let html_bird = `<ol>${birdNames.map((name) => `<li>${name}</li>`).join("")}</ol>`;
+ 
             let html = `
             <h3>Popular Dog Names</h3>
             ${html_dog}
@@ -56,7 +55,7 @@
             <h3>Popular Bird Names</h3>
             ${html_bird}
             `;
-
+            
             document.querySelector("#output").innerHTML = html;
         };
 
