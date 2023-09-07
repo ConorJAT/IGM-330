@@ -33,6 +33,20 @@
             console.log(`In onload - HTTP Status Code - ${e.target.status}`);
             const text = e.target.responseText;
             console.log(`Success - The file is ${text.length}`);
+
+            const words = text.split(",");
+
+            // Turn Array Into HTML
+            // Long Way:
+            // let html = "<ol>";
+            // for (let w of words) html += `<li>${w}</li>`;
+            // html += "</ol>";
+
+            // document.querySelector("#output").innerHTML = html;
+            
+            // One Liner:
+            let html = `<ol>${words.map((name) => `<li>${name}</li>`).join("")}</ol>`;
+            document.querySelector("#output").innerHTML = html;
         };
 
         xhr.onerror = e => console.log(`In onError - HTTP Status Code = ${e.target.status}`);
