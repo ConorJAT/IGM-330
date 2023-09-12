@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<title>XHR - Load JSON</title>
+	<style>
+	body{
+	  font-family: sans-serif;
+	}
+	</style>
+
+</head>
+<body>
+
+	<h2>XHR - Load JSON File</h2>
+	<p>The <code>pet-names.json</code> file contains popular dog and cat pet names, separated by commas.</p>
+	<p>Note that because XHR is loading a local file, this and the other examples will have to be run off a web server rather than from your computer's hard drive (e.g. banjo.rit.edu or VSCode's liveserver etc)</p>
+	
+	<hr>
+	<button id="my-button">Load Data</button>
+	<p id="output">Click button to load</p>
+	
+<script>
+    document.querySelector("#my-button").onclick = loadXmlJSON;
+
+    function loadXmlJSON()
+    {
+        const url = "data/pet-names.json";
+        const xhr = new XMLHttpRequest();
+
+        xhr.onload = (e) => {
+            console.log(`In onload - HTTP Status Code - ${e.target.status}`);
+            const text = e.target.responseText;
+            let json;
+            
+            try{
+                json = JSON.parse(text);
+            }catch{
+                document.querySelector("#output").innerHTML = "JSON.parse() Failed!";
+                return;
+            }
+
+            const dogNames = json.dognames;
+            const catNames = json.catnames;
+            // const birdNames = xml.querySelector("namelist[cid='birdnames']").textContent.split(",");
+
+            let html_dog = `<ol>${dogNames.map((name) => `<li>${name}</li>`).join("")}</ol>`;
+            let html_cat = `<ol>${catNames.map((name) => `<li>${name}</li>`).join("")}</ol>`;
+            // let html_bird = `<ol>${birdNames.map((name) => `<li>${name}</li>`).join("")}</ol>`;
+ 
+            let html = `
+            <h3>Popular Dog Names</h3>
+            ${html_dog}
+            <h3>Popular Cat Names</h3>
+            ${html_cat}
+            `;
+
+            // <h3>Popular Bird Names</h3>
+            // ${html_bird}
+            
+            document.querySelector("#output").innerHTML = html;
+        };
+
+        xhr.onerror = e => console.log(`In onError - HTTP Status Code = ${e.target.status}`);
+        xhr.open("GET", url);
+        xhr.send();
+    }
+</script>
+
+</body>
+</html>
