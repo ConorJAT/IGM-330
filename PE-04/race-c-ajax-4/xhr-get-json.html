@@ -19,7 +19,7 @@
 	
 	<hr>
 	<button id="my-button">Load Data</button>
-	<p id="output">Click button to load</p>
+	<div id="output">Click button to load</div>
 	
 <script>
     document.querySelector("#my-button").onclick = loadXmlJSON;
@@ -31,33 +31,25 @@
 
         xhr.onload = (e) => {
             console.log(`In onload - HTTP Status Code - ${e.target.status}`);
-            const text = e.target.responseText;
             let json;
             
+            // JSON Guard Code (Try/Catch)
             try{
-                json = JSON.parse(text);
+                json = JSON.parse(e.target.responseText);
             }catch{
                 document.querySelector("#output").innerHTML = "JSON.parse() Failed!";
                 return;
             }
 
-            const dogNames = json.dognames;
-            const catNames = json.catnames;
-            // const birdNames = xml.querySelector("namelist[cid='birdnames']").textContent.split(",");
-
-            let html_dog = `<ol>${dogNames.map((name) => `<li>${name}</li>`).join("")}</ol>`;
-            let html_cat = `<ol>${catNames.map((name) => `<li>${name}</li>`).join("")}</ol>`;
-            // let html_bird = `<ol>${birdNames.map((name) => `<li>${name}</li>`).join("")}</ol>`;
- 
-            let html = `
-            <h3>Popular Dog Names</h3>
-            ${html_dog}
-            <h3>Popular Cat Names</h3>
-            ${html_cat}
-            `;
-
-            // <h3>Popular Bird Names</h3>
-            // ${html_bird}
+            // Retrieving JSON Keys
+            const keys = Object.keys(json);
+            let html = ""
+            for(let k of keys){
+                const obj = json[k];
+                // html += `<h3>${obj.title}</h3>`;
+                html += `<h3>${obj.title = obj.title ? obj.title : "No Title Found!"}</h3>`;
+                html += `<ol>${obj.namelist.map((name) => `<li>${name}</li>`).join("")}</ol>`;
+            }
             
             document.querySelector("#output").innerHTML = html;
         };
