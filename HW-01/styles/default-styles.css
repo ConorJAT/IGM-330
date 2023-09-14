@@ -3,7 +3,7 @@ h1
     font-family: 'Exo 2';
 }
 
-#output, #myButton, #giveMe5
+#output, #btn-gen-1, #btn-gen-5
 {
     font-family: monospace;
 }
@@ -13,7 +13,7 @@ h1
     font-size: 200%;
 }
 
-#myButton
+#btn-gen-1
 {
     width: 200px;
     height: 30pt;
@@ -21,7 +21,7 @@ h1
     border-radius: 8px;
 }
 
-#giveMe5
+#btn-gen-5
 {
     width: 220px;
     height: 40pt;
@@ -61,7 +61,7 @@ h1
         text-align: center;
     }
 
-    #giveMe5
+    #btn-gen-5
     {
         display: none;
     }
@@ -76,7 +76,7 @@ h1
         background-color: #174287;
     }
 
-    #myButton
+    #btn-gen-1
     {
         height: 50pt;
         font-size: 15pt;
@@ -92,7 +92,7 @@ h1
         background-color: #23D160;
     }
 
-    #myButton
+    #btn-gen-1
     {
         width: 300px;
         height: 75pt;
@@ -132,7 +132,7 @@ h1
     }
 
     
-    #myButton
+    #btn-gen-1
     {
         width: 220px;
         height: 40pt;
@@ -148,7 +148,7 @@ h1
         background-color: #e0a1cb;
     }
 
-    #giveMe5
+    #btn-gen-5
     {
         display: inline;
     }
