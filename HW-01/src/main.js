@@ -25,7 +25,7 @@ const init = () => {
         xhr.onerror = e => console.log(`In onError - HTTP Status Code = ${e.target.status}`);
         xhr.open("GET", "data/babble-data.json");
         xhr.send();
-    }
+    };
 
     // Declare babbleLoaded.
     const babbleLoaded = evt => {
@@ -50,15 +50,14 @@ const init = () => {
 
         // Always load webpage with one randomized babble.
         generateBabble(1);
-    }
+    };
 
     // Create babble(s).
     const generateBabble = count => {
         // Initialize babble.
         let babble = "";
 
-        for (let i = 0; i < count; i++)
-        {
+        for (let i = 0; i < count; i++){
             // Concatenate a new babble for every iteration of loop. 
             babble += `${getRandom(words1)} ${getRandom(words2)} ${getRandom(words3)}<br><br>`;
         }
@@ -69,6 +68,6 @@ const init = () => {
 
     // Call loadBabble() - Retrieves and parses JSON only once!
     loadBabble();
-}
+};
 
 init();
