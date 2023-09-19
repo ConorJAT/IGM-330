@@ -2,9 +2,7 @@ import {getRandom} from "./utils.js";
 
 const init = () => {
     // Declare babble arrays.
-    let words1;
-    let words2;
-    let words3;
+    let words1, words2, words3;
     
     // Declare + initialize buttons.
     const btn_1 = document.querySelector("#btn-gen-1");
@@ -40,9 +38,7 @@ const init = () => {
         }
         
         // Initialize babble arrays.
-        words1 = json.words1;
-        words2 = json.words2;
-        words3 = json.words3;
+        ({words1, words2, words3} = json);
 
         // Add onClick event handlers onto buttons.
         btn_1.onclick = () => { generateBabble(1); };
