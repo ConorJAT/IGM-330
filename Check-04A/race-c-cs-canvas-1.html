@@ -33,12 +33,28 @@
 			// D - fill a rectangle with the current fill color
 			ctx.fillRect(20,20,600,440); 
 
-            ctx.fillStyle = "rgb(255, 255, 0)";
-
+			ctx.fillStyle = "rgb(255, 255, 0)";
             ctx.fillRect(120, 120, 400, 300);
+
             ctx.lineWidth = 10;
             ctx.strokeStyle = "green";
             ctx.strokeRect(120, 120, 400, 300);
+
+			// Extra Rectangle #1
+			ctx.fillStyle = "#55a4d9";
+			ctx.fillRect(80, 40, 200, 40);
+
+			ctx.lineWidth = 4;
+            ctx.strokeStyle = "#c9d4d1";
+            ctx.strokeRect(80, 40, 200, 40);
+
+			// Extra Rectangle #2
+			ctx.fillStyle = "#c9d4d1";
+			ctx.fillRect(500, 30, 80, 80);
+
+			ctx.lineWidth = 4;
+            ctx.strokeStyle = "#55a4d9";
+            ctx.strokeRect(500, 30, 80, 80);
 		}
 	</script>
 </head>
