@@ -32,9 +32,11 @@
 		let ctx;
 		let canvas;
 		let paused = false;
+
 		let createRectangles = true;
 		let createArcs = true; 
 		let createLines = true;
+
 		let x_pos, y_pos;
 		let x_direct, y_direct;
 	
@@ -52,14 +54,9 @@
 			
 			// B - the `ctx` variable points at a "2D drawing context"
 			ctx = canvas.getContext("2d");
-			
-			// C - all fill operations are now in red
-			ctx.fillStyle = "red"; 
-			
-			// D - fill a rectangle with the current fill color
-			ctx.fillRect(20,20,600,440); 
 
 			// rect()
+			drawRectangle(ctx, 20, 20, 600, 440, "red");
 			drawRectangle(ctx, 120, 120, 400, 300, "rgb(255, 255, 0)", 10, "green");
 
 			// lineTo()
