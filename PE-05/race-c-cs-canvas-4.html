@@ -33,15 +33,8 @@
 		let canvas;
 		let paused = false;
 		let createRectangles = true;
-		let x_pos, y_pos;
-		let x_direct, y_direct;
 	
 		function init(){
-			x_pos = 50;
-			y_pos = 50;
-			x_direct = 1;
-			y_direct = 1;
-			
 			console.log("page loaded!");
 			// #2 Now that the page has loaded, start drawing!
 			
@@ -128,26 +121,6 @@
 			if(paused) return;
 			requestAnimationFrame(update);
 			if(createRectangles) drawRandomRect(ctx);
-			//drawBounceRect(ctx);
-		}
-
-		function drawBounceRect(ctx){
-			drawRectangle(ctx, x_pos, y_pos, 80, 80, getRandomColor(), 5, getRandomColor());
-
-			x_pos += (5 * x_direct);
-			y_pos += (3 * y_direct);
-
-			if(x_pos >= 560 || x_pos <= 0) {
-				x_direct *= -1;
-				ctx.fillStyle = getRandomColor();
-				ctx.strokeStyle = getRandomColor();
-			}
-
-			if(y_pos >= 400 || y_pos <= 0) {
-				y_direct *= -1;
-				ctx.fillStyle = getRandomColor();
-				ctx.strokeStyle = getRandomColor();
-			}
 		}
 
 		function drawRandomRect(ctx){
@@ -171,7 +144,7 @@
 			}
 		}
 
-		// canvas helpers
+		// canvas helpers!
 		function drawRectangle(ctx,x,y,width,height,fillStyle="black",lineWidth=0,strokeStyle="black"){
 			ctx.save();
 			ctx.fillStyle = fillStyle;
