@@ -2,16 +2,19 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>Sine Start</title>
+	<title>Phyllotaxis</title>
 	<style>canvas{ border: 1px solid black; }</style>
 	<script>
 	"use strict";
 
-	const canvasWidth = 400, canvasHeight = 300;
+	const canvasWidth = 960, canvasHeight = 720;
 
 	let ctx;
     let n = 0;
-    const diverge = 137.5;
+    let fps = 60;
+    let radius = 2;
+    const c = 8;
+    let diverge = 137.5;
 
     window.onload= init;
 
@@ -20,8 +23,41 @@
 		canvas.width = canvasWidth;
 		canvas.height = canvasHeight;
 		ctx.fillRect(0,0,canvasWidth,canvasHeight);
+
+        setupUI();
+
+        loop();
 	}
 
+    function loop(){
+        setTimeout(loop,1000/fps);
+
+        // each frame draw a new dot
+        // `a` is the angle
+        // `r` is the radius from the center (e.g. "Pole") of the flower
+        // `c` is the "padding/spacing" between the dots
+        let a = n * dtr(diverge);
+        let r = c * Math.sqrt(n);
+
+        // now calculate the `x` and `y`
+        let x = r * Math.cos(a) + canvasWidth/2;
+        let y = r * Math.sin(a) + canvasHeight/2;
+
+        // let color = `rgb(${n % 256},0,255)`;
+
+        // let aDegrees = (n * diverge) % 256;
+        // let color = `rgb(${aDegrees},0,255)`;
+
+        // let aDegrees = (n * diverge) % 361;
+        // let color = `hsl(${aDegrees},100%,50%)`;
+
+        let color = `hsl(${n/5 % 361},100%,50%)`;
+
+        drawCircle(ctx, x, y, radius, color);
+
+        n++;
+        radius += 0.005;
+    }
 
 	// helpers
 	function dtr(degrees){
@@ -38,10 +74,30 @@
 		ctx.restore();
 	}
 
+    function setupUI(){
+        document.querySelector("#ctrl-diverge").onchange = (e) => { diverge = e.target.value; };
+
+        document.querySelector("#btn-restart").onclick = () => { 
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+            n = 0;
+        };
+    }
+
 	</script>
 </head>
 <body>
 <canvas id="canvas"></canvas>
-
+<div id="controls">
+	<label>Divergence Angle</label>
+	<select id="ctrl-diverge">
+		<option value="137.1">137.1</option>
+		<option value="137.3">137.3</option>
+		<option value="137.5" selected>137.5</option>
+		<option value="137.7">137.7</option>
+		<option value="137.9">137.9</option>
+	</select>
+	<button id="btn-restart">Restart App</button>
+</div>
 </body>
 </html>
