@@ -13,8 +13,8 @@
     let n = 0;
     let fps = 60;
     let radius = 2;
-    const c = 8;
     let diverge = 137.5;
+    const c = 8;
 
     window.onload= init;
 
@@ -57,6 +57,17 @@
 
         n++;
         radius += 0.005;
+
+        if (n == 1500){
+            n = 0;
+            radius = 2;
+
+            ctx.save();
+            ctx.fillStyle = "rgb(0, 0, 0, .2)";
+            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+            ctx.restore();
+
+        }
     }
 
 	// helpers
@@ -81,7 +92,10 @@
             ctx.fillStyle = "black";
             ctx.fillRect(0, 0, canvasWidth, canvasHeight);
             n = 0;
+            radius = 2;
         };
+
+        document.querySelector("#check-reverse").onchange = () => { diverge *= -1; };
     }
 
 	</script>
@@ -97,7 +111,31 @@
 		<option value="137.7">137.7</option>
 		<option value="137.9">137.9</option>
 	</select>
+
+    <br>
+
+    <span>
+        <input type="checkbox" id="check-reverse">
+	    <label for="check-reverse">Reverse Direction</label>
+    </span>
+    
+    <br>
+
 	<button id="btn-restart">Restart App</button>
 </div>
+
+<h1>Changes Added to App</h1>
+<ul>
+    <li>The user can change the divergence angle via the pulldown menu displayed above.</li>
+    <li>The user can reverse the direction in which the floret is drawn by checking "Reverse Direction". This effect can be reversed.</li>
+    <li>The user can clear the canvas and start a new floret using the "Restart App" button. The floret will restart using whatever divergence angle was last selected.</li>
+    <li>Changes made from starter code:</li>
+    <ul>
+        <li>Increased frame rate to 60 FPS (Required)</li>
+        <li>Increased canvas size to 960 x 720</li>
+        <li>The "radius" value starts at 2 and slowly increments by +0.005</li>
+        <li>When "n" reaches a value of 1500, the floret will reset, keeping the old on but rather adding a slight tint over it.</li>
+    </ul>
+</ul>
 </body>
 </html>
