@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        "use strict";
+
+        // Instantiating Objects:
+        // we could use the Object() constructor to make a new object
+        let a = new Object();
+        a.job = "Ambulance Driver";
+        console.log(a); // {job: 'Ambulance Driver'}
+
+        // but more commonly we'll use object literal syntax
+        let b = {};
+        b.job = "Baker";
+        console.log(b); // {job: 'Baker'}
+
+        // we can also give the object properties when we declare it
+        let c = { "job" : "Criminal" };
+        console.log(c); // {job: 'Criminal'}
+
+        let d = {
+            "name": "Danny",
+            "sayHello": function(){ console.log(`Hello - my name is ${this.name}`); }
+        };
+
+        d.job = "Dog Walker";
+        d.sayGoodbye = function(){ console.log(`Goodbye - my job is ${this.job}`); };
+
+        console.log(d);
+        d.sayHello();
+        d.sayGoodbye();
+
+
+        // .Seal()
+        // Object.seal(d);
+        // d.naame = "Donut Maker"; // should be .name, not .naame - gives an ERROR or fails silently
+        // console.log(d); // no .naame property was added
+
+
+        // // .Freeze()
+        // Object.freeze(d);
+        // d.job = "Ditch Digger"; // cannot modify existing property
+        // d.age = 55; // NOR add a new property
+        // console.log(d); // no changes or new properties
+
+
+        // // Using Seal() and Freeze() on Arrays
+        // const e = ["red","green","blue"];
+        // e.push("cyan"); // WHY DOES THIS WORK?
+        // console.log(e); // ['red', 'green', 'blue', 'cyan']
+
+        // Object.seal(e);
+        // e.push("yellow"); // fails because we can't add index `4` (which is a property key) 
+        // e[0] = "Maroon"; // but we CAN do this
+        // console.log(e); // ['Maroon', 'green', 'blue', 'cyan']
+
+        // Object.freeze(e);
+        // e[1] = "Emerald"; // now this will fail too
+        // console.log(e); // ['Maroon', 'green', 'blue', 'cyan']
+
+
+        // .ToString()
+        console.log(a.toString()); // '[object Object]'
+
+        // Let's add our own .toString() method
+        // this will override (or "shadow") the existing .toString()
+        a.toString = function(){ console.log(`My job is ${this.job}`); };
+        console.log(a.toString()); // My job is Ambulance Driver
+
+
+        // Prototype Objects
+        const colorEnum = Object.create(null); // enum has no protoype
+        console.log(colorEnum); // {} - missing the prototype methods
+        //console.log(colorEnum.toString()); // ERROR
+
+        colorEnum.REDDISH_COLOR = "rgb(200,0,0)";
+        colorEnum.GREENISH_COLOR = "rgb(0,200,0)";
+        Object.freeze(colorEnum); 
+
+        console.log(colorEnum); // {REDDISH_COLOR: 'rgb(200,0,0)', GREENISH_COLOR: 'rgb(0,200,0)'}
+        console.log(colorEnum.REDDISH_COLOR); // rgb(200,0,0)
+        console.log(colorEnum.GREENISH_COLOR); // rgb(0,200,0)
+
+
+        // Getting & Setting Properties
+        console.log(d.job); // Dog Walker
+        console.log(d["job"]); // Dog Walker
+        console.log(d.jawb); // undefined because .jawb property does not exist (but this is an ERROR in most languages)
+
+        // Handling a property name with spaces requires square brackets
+        d["dream job"] = "Lion Tamer";
+        console.log(d["dream job"]); // Lion Tamer
+        // onsole.log(d.dream job); // SYNTAX ERROR
+
+
+        // Function Properties
+        d = {
+          "name": "Danny",
+          "sayHello": function(){ 
+            console.log(`Hello - my name is ${this.name}`); // note that `this` is required to access the `name` property
+           },
+           job: "Door-to-door Salesperson"
+        };
+
+        console.log(d.sayHello());
+
+        // Most developers prefer this newer syntax though
+        let d2 = {
+          "name": "Denny",
+          sayHello(){ 
+            console.log(`Hello - my name is ${this.name}`); 
+          },
+          job: "Ding-dong Ditcher"
+        };
+
+        console.log(d2.sayHello());
+
+        let d3 = {
+          "name": "Denny",
+          sayHello: () => {
+            console.log(`Hello - my name is ${this.name}`); 
+          },
+          job: "Ding-dong Ditcher"
+        };
+        
+        // this.name will be undefined
+        console.log(d3.sayHello()); // Hello - my name is 
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
