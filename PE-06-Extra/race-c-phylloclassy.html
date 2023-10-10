@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Phyllotaxis</title>
+	<style>canvas{ border: 1px solid black; }</style>
+	<script>
+	"use strict";
+
+	const canvasWidth = 960, canvasHeight = 720;
+
+	let ctx;
+    let fps = 60;
+
+    const PhylloFlower = class{
+        constructor(centerX, centerY, diverge, c, radius=2){
+            this.n = 0;
+            this.centerX = centerX;
+            this.centerY = centerY;
+            this.diverge = diverge;
+            this.c = c;
+            this.radius = radius;
+        }
+
+        draw(ctx){            
+            let a = this.n * dtr(this.diverge);
+            let r = this.c * Math.sqrt(this.n);
+
+            let x = r * Math.cos(a) + this.centerX;
+            let y = r * Math.sin(a) + this.centerY;
+
+            let color = `hsl(${this.n/5 % 361},100%,50%)`;
+
+            drawCircle(ctx, x, y, this.radius, color);
+
+            this.n++;
+            this.radius += 0.005;
+
+            if (this.n == 1500){
+                this.n = 0;
+                this.radius = 2;
+
+                ctx.save();
+                ctx.fillStyle = "rgb(0, 0, 0, .2)";
+                ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+                ctx.restore();
+            }
+        }
+
+        changeDivergence(angle){ this.diverge = angle; }
+
+        reset(){
+            this.n = 0;
+            this.radius = 2;
+        }
+
+        reverse(){ this.diverge *= -1; }
+    };
+
+    const sprites = [new PhylloFlower(280, 360, 137.5, 5), new PhylloFlower(680, 360, 137.1, 5)];
+
+	const init = () => {
+		ctx = canvas.getContext("2d");
+		canvas.width = canvasWidth;
+		canvas.height = canvasHeight;
+		ctx.fillRect(0,0,canvasWidth,canvasHeight);
+
+        setupUI();
+
+        loop();
+	};
+
+    const loop = () => {
+        setTimeout(loop,1000/60);
+
+        for (let f of sprites) f.draw(ctx);
+    };
+
+	// helpers
+	const dtr = (degrees) => { return degrees * (Math.PI/180); };
+
+	const drawCircle = (ctx,x,y,radius,color) => {
+		ctx.save();
+		ctx.fillStyle = color;
+		ctx.beginPath();
+		ctx.arc(x,y,radius,0,Math.PI * 2);
+		ctx.closePath();
+		ctx.fill();
+		ctx.restore();
+	};
+
+    const setupUI = () => {
+        document.querySelector("#ctrl-diverge-left").onchange = (e) => { sprites[0].changeDivergence(e.target.value); };
+        document.querySelector("#ctrl-diverge-right").onchange = (e) => { sprites[1].changeDivergence(e.target.value); };
+
+        document.querySelector("#btn-restart").onclick = () => { 
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+            for (let f of sprites) f.reset();
+        };
+
+        document.querySelector("#check-reverse").onchange = () => { for (let f of sprites) f.reverse(); };
+    };
+
+    window.onload = init;
+	</script>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="controls">
+	<label>Divergence Angle (Left)</label>
+	<select id="ctrl-diverge-left">
+		<option value="137.1">137.1</option>
+		<option value="137.3">137.3</option>
+		<option value="137.5" selected>137.5</option>
+		<option value="137.7">137.7</option>
+		<option value="137.9">137.9</option>
+	</select>
+
+    <label>Divergence Angle (Right)</label>
+	<select id="ctrl-diverge-right">
+		<option value="137.1" selected>137.1</option>
+		<option value="137.3">137.3</option>
+		<option value="137.5">137.5</option>
+		<option value="137.7">137.7</option>
+		<option value="137.9">137.9</option>
+	</select>
+
+    <br>
+
+    <span>
+        <input type="checkbox" id="check-reverse">
+	    <label for="check-reverse">Reverse Direction</label>
+    </span>
+    
+    <br>
+
+	<button id="btn-restart">Restart App</button>
+</div>
+</body>
+</html>
