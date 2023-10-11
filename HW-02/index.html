@@ -13,11 +13,11 @@
   <canvas width="800" height="400"></canvas>
   <div id="controls">
     <section>
-      <button id="playButton" data-playing="no"></button>
-      <button id="fsButton">Full Screen</button>
+      <button id="btn-play" data-playing="no"></button>
+      <button id="btn-fs">Full Screen</button>
 		
       <label>Track: 
-        <select id="trackSelect">
+        <select id="select-track">
           <option value="media/Different Heaven & Sian Area - Feel Like Horrible.mp3" selected>Different Heaven & Sian Area - Feel Like Horrible</option>
           <option value="media/F-777 - Deadlocked.mp3">F-777 - Deadlocked</option>
           <option value="media/Mittsies - Ritual.ogg">Mittsies - Ritual</option>
@@ -28,17 +28,17 @@
     </section>
 		
     <section>
-      Volume: <input type="range" id="volumeSlider" min="0" max="2" value="1" step="0.01">
-      <span id="volumeLabel">???</span>
+      Volume: <input type="range" id="slider-volume" min="0" max="2" value="1" step="0.01">
+      <span id="label-volume">???</span>
     </section>
 
     <section>
-      <span><input type="checkbox" checked="true" id="gradientCB"><label for="gradientCB">Show Gradient</label></span>
-      <span><input type="checkbox" checked="true" id="barsCB"><label for="barsCB">Show Bars</label></span>
-      <span><input type="checkbox" checked="true" id="circlesCB"><label for="circlesCB">Show Circles</label></span>
-      <span><input type="checkbox" id="noiseCB"><label for="noiseCB">Show Noise</label></span>
-      <span><input type="checkbox" id="invertCB"><label for="invertCB">Show Invert</label></span>
-      <span><input type="checkbox" id="embossCB"><label for="embossCB">Show Emboss</label></span>
+      <span><input type="checkbox" checked="true" id="cb-gradient"><label for="cb-gradient">Show Gradient</label></span>
+      <span><input type="checkbox" checked="true" id="cb-bars"><label for="cb-bars">Show Bars</label></span>
+      <span><input type="checkbox" checked="true" id="cb-circles"><label for="cb-circles">Show Circles</label></span>
+      <span><input type="checkbox" id="cb-noise"><label for="cb-noise">Show Noise</label></span>
+      <span><input type="checkbox" id="cb-invert"><label for="cb-invert">Show Invert</label></span>
+      <span><input type="checkbox" id="cb-emboss"><label for="cb-emboss">Show Emboss</label></span>
     </section>
   </div>
 </main>

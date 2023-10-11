@@ -26,7 +26,7 @@ const DEFAULTS = Object.freeze({
 });
 
 
-function init(){
+const init = () => {
 	console.log("init called");
 	console.log(`Testing utils.getRandomColor() import: ${utils.getRandomColor()}`);
 
@@ -36,12 +36,12 @@ function init(){
 
   canvas.setupCanvas(canvasElement, audio.analyserNode);
   loop();
-}
+};
 
 
-function setupUI(canvasElement){
+const setupUI = (canvasElement) => {
   // A - hookup fullscreen button
-  const fsButton = document.querySelector("#fsButton");
+  const fsButton = document.querySelector("#btn-fs");
 	
   // add .onclick event to button
   fsButton.onclick = e => {
@@ -51,6 +51,8 @@ function setupUI(canvasElement){
 
 
   // B - add .onclick event to "Play/Pause" button
+  const playButton = document.querySelector("#btn-play");
+
   playButton.onclick = e => {
     console.log(`audioCtx.state before = ${audio.audioCtx.state}`);
 
@@ -74,8 +76,8 @@ function setupUI(canvasElement){
 
 
   // C - hookup volume slider & label
-  let volumeSlider = document.querySelector("#volumeSlider");
-  let volumeLabel = document.querySelector("#volumeLabel");
+  let volumeSlider = document.querySelector("#slider-volume");
+  let volumeLabel = document.querySelector("#label-volume");
 
   // add .oninput event to slider
   volumeSlider.oninput = e => {
@@ -91,7 +93,7 @@ function setupUI(canvasElement){
 	
 
   // D - hookup track <select>
-  let trackSelect = document.querySelector("#trackSelect");
+  let trackSelect = document.querySelector("#select-track");
 
   // add .onchange event to <select>
   trackSelect.onchange = e => {
@@ -104,12 +106,12 @@ function setupUI(canvasElement){
   }
 
   // E - hookup canvas toggles
-  let gradient = document.querySelector("#gradientCB");
-  let bars = document.querySelector("#barsCB");
-  let circles = document.querySelector("#circlesCB");
-  let noise = document.querySelector("#noiseCB");
-  let invert = document.querySelector("#invertCB");
-  let emboss = document.querySelector("#embossCB");
+  let gradient = document.querySelector("#cb-gradient");
+  let bars = document.querySelector("#cb-bars");
+  let circles = document.querySelector("#cb-circles");
+  let noise = document.querySelector("#cb-noise");
+  let invert = document.querySelector("#cb-invert");
+  let emboss = document.querySelector("#cb-emboss");
   
   gradient.onchange = e => drawParams.showGradient = e.target.checked;
   bars.onchange = e => drawParams.showBars = e.target.checked;
@@ -117,12 +119,12 @@ function setupUI(canvasElement){
   noise.onchange = e => drawParams.showNoise = e.target.checked;
   invert.onchange = e => drawParams.showInvert = e.target.checked;
   emboss.onchange = e => drawParams.showEmboss = e.target.checked;
-} // end setupUI
+}; // end setupUI
 
 
-function loop(){
+const loop = () => {
     requestAnimationFrame(loop);
     canvas.draw(drawParams);
-}
+};
 
 export {init};
