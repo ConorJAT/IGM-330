@@ -79,7 +79,7 @@ const draw = (params={}) => {
 
 			let circleRadius = percent * maxRadius;
 			ctx.beginPath();
-			ctx.fillStyle = utils.makeColor(255, 111, 111, .34 - percent/3.0);
+			ctx.fillStyle = utils.makeColor(85, 215, 172, .34 - percent/3.0);
 			ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius, 0, 2 * Math.PI, false);
 			ctx.fill();
 			ctx.closePath();
@@ -94,7 +94,7 @@ const draw = (params={}) => {
 			// yellow-ish circles, smaller
 			ctx.save();
 			ctx.beginPath();
-			ctx.fillStyle = utils.makeColor(200, 200, 0, .5 - percent/5.0);
+			ctx.fillStyle = utils.makeColor(240, 240, 240, .5 - percent/5.0);
 			ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius * .5, 0, 2 * Math.PI, false);
 			ctx.fill();
 			ctx.closePath();
