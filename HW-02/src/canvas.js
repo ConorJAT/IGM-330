@@ -55,7 +55,7 @@ const draw = (params={}) => {
 		let screenWidthForBars = canvasWidth - (audioData.length * barSpacing) - margin * 2;
 		let barWidth = screenWidthForBars / audioData.length;
 		let barHeight = 200;
-		let topSpacing = 100;
+		let topSpacing = 250;
 
 		ctx.save();
 		ctx.fillStyle = 'rgba(255, 255, 255, .5)';
