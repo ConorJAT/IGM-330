@@ -21,6 +21,11 @@
 		
         let ctx = document.querySelector('canvas').getContext('2d');
         let rotation = 0;
+		
+		let moveScale = 3;
+		let sizeScale = 0.05;
+		let circleX = 200;
+		let circleScale = 1;
 
 		loop();
 	
@@ -48,11 +53,13 @@
             ctx.stroke();
             ctx.restore();
 
-            drawBetterTriangle(ctx, 100, 360, 75, rotation * -1.5, "blue", "green", 5, 1.33);
+            drawBetterTriangle(ctx, 100, 360, 75, rotation * -1.5, "lime", "blue", 5, 1.33);
 
             drawSquare2(ctx,200,100,100,100,rotation * 2,"red",0.55);
             drawSquare2(ctx,350,100,100,100,rotation / 2,"purple",1.0);
             drawSquare2(ctx,500,100,100,100,-rotation,"purple",1.25);
+
+			drawCircle(ctx, circleX, 360, 25, "white", "black", 5, circleScale);
 
 			// do some transformations?
 			ctx.save();
@@ -138,6 +145,29 @@
 
             ctx.restore();
         }
+
+		function drawCircle(ctx, x, y, radius=30, fillStyle="white", strokeStyle="black", lineWidth=5, scale=1.0){
+			ctx.save();
+            ctx.translate(x + moveScale, y);
+			ctx.scale(scale + sizeScale, scale + sizeScale);
+            ctx.fillStyle=fillStyle;
+            ctx.strokeStyle=strokeStyle;
+			ctx.lineWidth=lineWidth;
+
+			ctx.beginPath();
+			ctx.arc(0, 0, radius, 0, Math.PI*2);
+			ctx.closePath();
+
+			ctx.fill();
+            ctx.stroke();
+
+            ctx.restore();
+
+			circleX += moveScale;
+			circleScale += sizeScale;
+			if (circleX >= 600 || circleX <= 200) moveScale *= -1; 
+			if (circleScale >= 2 || circleScale <= .5) sizeScale *= -1;
+		}
 	</script>
 </body>
 </html>
