@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Exam #1 Review</title>
+  <style>
+    canvas {
+		  border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+<ol id="list">
+  <!—- The generated HTML will go here -—>
+</ol>
+<canvas width="400" height="300"></canvas>
+<script>
+  "use strict";
+  
+  // I - #1
+  let score = 10;
+	function incrementScore(flag){
+		score ++;
+		if(flag){
+			let score = 1000;
+			return score;
+		}
+		return score;
+	}
+	incrementScore();
+	console.log(`Log #1: ${score}`); 
+	console.log(`Log #2: ${incrementScore(true)}`);
+	
+	
+	// I - #2
+	function doubleIt(num){
+    return num * 2;
+  }
+  console.log(doubleIt()); 
+
+
+  // I. - #3
+	function doubleIt(num){
+    return num * 2;
+	}
+	doubleIt(5);
+	//console.log(num); 
+
+  
+  
+  // III. - #1-2
+	const colors = ["red","green","blue"];
+	// YOU DO
+  let html;
+
+	// i) old school with `for..of` loop (NOT how it was supposed to be done)
+  for (let c of colors) html += `<li>${c}</li>`;
+	
+	// ii) array.map() & string.join() - long way
+  html = colors.map(c => `<li>${c}</li>`).join("");
+
+	// iii) array.map() & string.join() - "one-liner" way
+	document.querySelector("#list").innerHTML = colors.map(c => `<li>${c}</li>`).join("");
+
+  document.querySelector("#list").innerHTML = html;
+
+	// IV. - #3
+	const string = `{
+    "animals": [
+      "Lion",
+      "Tiger",
+      "Bear"
+    ]
+  }`;
+  console.log(`string=${string}`);
+  
+  
+  
+  // IV. - #4-5
+  
+  // https://jsonlint.com/
+  /*
+  - The data you are encoding:
+  a) The title of the app (which, for example, might be used in a <title> or <h1> tag) is “Dog Finder"
+  b) There are 2 adoptable dogs - "Luna" & “Mocha" - and their ages are 4 and 10 respectively
+
+  - Do NOT make the JSON any harder to parse than necessary - for example do not use random GUIDs as key names, instead use meaningful names.
+
+  - Use the proper data types in each part of your JSON file - the data types you will utilize here are object, array, number and string. Recall that in JSON, object keys are always strings.
+  */
+  
+  // BEST SOLUTION - the name and age of each dog are grouped as objects
+  /*
+  {
+  "title" : "Dog Finder",
+  "adoptable-dogs" : [
+	{
+      "name": "Luna", 
+       "age": 4
+     },
+	{
+       "name": "Mocha", 
+       "age": 10
+    }
+   ]
+	}
+  */
+  
+  
+  // SUB-OPTIMAL SOLUTION - parallel arrays
+  /*
+  {
+	  "title": "Dog Finder",
+	  "names": ["Luna", "Mocha"],
+    "ages": [4, 10]
+  }
+*/  
+  
+  // NOT GOOD - ARRAYS EVERYWHERE - 'CAUSE WE CAN!
+  /*
+  {
+	  "title": ["Dog Finder"],
+	  "names": ["Luna", "Mocha"],
+    "ages": [4, 10]
+  }
+  */
+
+	// AND OTHER STUFF THAT WAS NOT WELL-FORMED AND WOULD NOT PARSE
+	  /*
+  {
+	  ["Dog Finder"]: {
+	  		[names]: {"Luna", "Mocha"},
+    		[ages]: {4, 10}
+    }
+  }
+	*/
+  
+  
+  // V. - #3
+  // Write canvas code that will draw a 10-pixel wide green line from (200,200) to (200,400)
+
+	const ctx = document.querySelector("canvas").getContext("2d");
+  ctx.beginPath();
+	ctx.moveTo(200, 200);
+	ctx.lineTo(200, 400);
+	ctx.closePath();
+	ctx.lineWidth = 10;
+	ctx.strokeStyle = "green";
+	ctx.stroke();
+	
+	
+	// V. - #4
+	// Write canvas code that will fill a 50-pixel radius circle with a solid red color. The circle is centered at (100,100)
+  // DO THIS ONE ON YOUR OWN
+
+
+  // Higher Order Function - Function that accepts another function as a parameter, and then performs an operation
+  //                         utilizing that function.  
+
+  // For the canvas drawing API, a PATH is the mathematical representation of a shape.
+
+  </script>
+
+
+</body>
+</html>
