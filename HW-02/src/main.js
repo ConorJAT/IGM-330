@@ -27,8 +27,7 @@ const DEFAULTS = Object.freeze({
 
 const init = () => {
 	console.log("init called");
-	console.log(`Testing utils.getRandomColor() import: ${utils.getRandomColor()}`);
-
+  
   audio.setupWebAudio(DEFAULTS.sound1);
 	let canvasElement = document.querySelector("canvas"); // hookup <canvas> element
 	setupUI(canvasElement);
@@ -73,47 +72,7 @@ const setupUI = (canvasElement) => {
     }
   };
 
-
-  // C - hookup volume slider & label
-  let volumeSlider = document.querySelector("#slider-volume");
-  let volumeLabel = document.querySelector("#label-volume");
-
-  // add .oninput event to slider
-  volumeSlider.oninput = e => {
-    // set the gain
-    audio.setVolume(e.target.value);
-
-    // update value of label to match the value of slider
-    volumeLabel.innerHTML = Math.round((e.target.value/2 * 100));
-  };
-
-  // set value of label to match initial value of slider
-  volumeSlider.dispatchEvent(new Event("input"));
-	
-
-  let trebleSlider = document.querySelector("#slider-treble");
-  let trebleLabel = document.querySelector("#label-treble");
-
-  trebleSlider.oninput = e => {
-    audio.setHighshelf(e.target.value);
-    trebleLabel.innerHTML = Math.round((e.target.value/20 * 100));
-  }
-
-  trebleSlider.dispatchEvent(new Event("input"));
-
-
-  let bassSlider = document.querySelector("#slider-bass");
-  let bassLabel = document.querySelector("#label-bass");
-
-  bassSlider.oninput = e => {
-    audio.setLowshelf(e.target.value);
-    bassLabel.innerHTML = Math.round((e.target.value/20 * 100));
-  }
-
-  bassSlider.dispatchEvent(new Event("input"));
-
-
-  // D - hookup track <select>
+  // C - hookup track <select>
   let trackSelect = document.querySelector("#select-track");
 
   // add .onchange event to <select>
@@ -130,7 +89,7 @@ const setupUI = (canvasElement) => {
 
   visualSelect.onchange = e => { drawParams.visualData = e.target.value; }
 
-  // E - hookup canvas toggles
+  // D - hookup canvas toggles
   let gradient = document.querySelector("#cb-gradient");
   let bars = document.querySelector("#cb-bars");
   let circles = document.querySelector("#cb-circles");
