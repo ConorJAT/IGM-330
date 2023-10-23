@@ -12,6 +12,7 @@ import * as audio from './audio.js';
 import * as canvas from './canvas.js';
 
 const drawParams = {
+  visualData    : "frequency",
   showGradient  : true,
   showBars      : true,
   showCircles   : true,
@@ -112,7 +113,6 @@ const setupUI = (canvasElement) => {
   bassSlider.dispatchEvent(new Event("input"));
 
 
-
   // D - hookup track <select>
   let trackSelect = document.querySelector("#select-track");
 
@@ -125,6 +125,10 @@ const setupUI = (canvasElement) => {
         playButton.dispatchEvent(new MouseEvent("click"));
     }
   }
+
+  let visualSelect = document.querySelector("#select-visual");
+
+  visualSelect.onchange = e => { drawParams.visualData = e.target.value; }
 
   // E - hookup canvas toggles
   let gradient = document.querySelector("#cb-gradient");

@@ -10,7 +10,7 @@
 
 <body>
 <main>
-  <canvas width="960" height="720"></canvas>
+  <canvas width="1080" height="720"></canvas>
   <div id="controls">
     <section>
       <button id="btn-play" data-playing="no"></button>
@@ -23,6 +23,13 @@
           <option value="media/Mittsies - Ritual.ogg">Mittsies - Ritual</option>
           <option value="media/Silva Hound - Cool Friends (Murtagh & Veschell Remix).mp3">Silva Hound - Cool Friends (Murtagh & Veschell Remix)</option>
           <option value="media/Waterflame - Cats!.mp3">Waterflame - Cats!</option>
+        </select>
+      </label>
+
+      <label>| Visualization:
+        <select id="select-visual">
+          <option value="frequency" selected>Byte Frequency Data</option>
+          <option value="time-domain">Byte Time Domain Data</option>
         </select>
       </label>
     </section>
