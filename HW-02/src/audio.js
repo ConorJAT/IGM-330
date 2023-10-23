@@ -85,22 +85,14 @@ const setVolume = (value) => {
     gainNode.gain.value = value;
 };
 
-const toggleHighshelf = (checked) => {
-    if(checked){
-        highShelfbiquadFilter.frequency.setValueAtTime(1000, audioCtx.currentTime);
-        highShelfbiquadFilter.gain.setValueAtTime(25, audioCtx.currentTime);
-    }else{
-        highShelfbiquadFilter.gain.setValueAtTime(0, audioCtx.currentTime);
-    }
+const setHighshelf = (value) => {
+    highShelfbiquadFilter.frequency.setValueAtTime(1000, audioCtx.currentTime);
+    highShelfbiquadFilter.gain.setValueAtTime(value, audioCtx.currentTime);
 }
 
-const toggleLowshelf = (checked) => {
-    if(checked){
-      lowShelfBiquadFilter.frequency.setValueAtTime(1000, audioCtx.currentTime);
-      lowShelfBiquadFilter.gain.setValueAtTime(15, audioCtx.currentTime);
-    }else{
-      lowShelfBiquadFilter.gain.setValueAtTime(0, audioCtx.currentTime);
-    }
+const setLowshelf = (value) => {
+    lowShelfBiquadFilter.frequency.setValueAtTime(1000, audioCtx.currentTime);
+    lowShelfBiquadFilter.gain.setValueAtTime(value, audioCtx.currentTime);
 }
 
-export {audioCtx, setupWebAudio, playCurrentSound, pauseCurrentSound, loadSoundFile, setVolume, toggleHighshelf, toggleLowshelf, analyserNode};
+export {audioCtx, setupWebAudio, playCurrentSound, pauseCurrentSound, loadSoundFile, setVolume, setHighshelf, setLowshelf, analyserNode};

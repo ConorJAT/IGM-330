@@ -90,6 +90,29 @@ const setupUI = (canvasElement) => {
   volumeSlider.dispatchEvent(new Event("input"));
 	
 
+  let trebleSlider = document.querySelector("#slider-treble");
+  let trebleLabel = document.querySelector("#label-treble");
+
+  trebleSlider.oninput = e => {
+    audio.setHighshelf(e.target.value);
+    trebleLabel.innerHTML = Math.round((e.target.value/20 * 100));
+  }
+
+  trebleSlider.dispatchEvent(new Event("input"));
+
+
+  let bassSlider = document.querySelector("#slider-bass");
+  let bassLabel = document.querySelector("#label-bass");
+
+  bassSlider.oninput = e => {
+    audio.setLowshelf(e.target.value);
+    bassLabel.innerHTML = Math.round((e.target.value/20 * 100));
+  }
+
+  bassSlider.dispatchEvent(new Event("input"));
+
+
+
   // D - hookup track <select>
   let trackSelect = document.querySelector("#select-track");
 
@@ -108,15 +131,11 @@ const setupUI = (canvasElement) => {
   let bars = document.querySelector("#cb-bars");
   let circles = document.querySelector("#cb-circles");
   let noise = document.querySelector("#cb-noise");
-  let treble = document.querySelector("#cb-highshelf");
-  let bass = document.querySelector("#cb-lowshelf");
   
   gradient.onchange = e => drawParams.showGradient = e.target.checked;
   bars.onchange = e => drawParams.showBars = e.target.checked;
   circles.onchange = e => drawParams.showCircles = e.target.checked;
   noise.onchange = e => drawParams.showNoise = e.target.checked;
-  treble.onchange = e => audio.toggleHighshelf(e.target.checked);
-  bass.onchange = e => audio.toggleLowshelf(e.target.checked);
 }; // end setupUI
 
 
