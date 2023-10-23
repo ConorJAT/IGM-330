@@ -1,0 +1,42 @@
+{
+    "title" : "Planet EDM Audio Visualizer",
+
+    "tracks" : [
+        {
+            "track-url" : "media/Different Heaven & Sian Area - Feel Like Horrible.mp3",
+            "track-name" : "Different Heaven & Sian Area - Feel Like Horrible"
+        },
+
+        {
+            "track-url" : "media/F-777 - Deadlocked.mp3",
+            "track-name" : "F-777 - Deadlocked"
+        },
+
+        {
+            "track-url" : "media/Mittsies - Ritual.ogg",
+            "track-name" : "Mittsies - Ritual"
+        },
+
+        {
+            "track-url" : "media/Silva Hound - Cool Friends (Murtagh & Veschell Remix).mp3",
+            "track-name" : "Silva Hound - Cool Friends (Murtagh & Veschell Remix)"
+        },
+
+        {
+            "track-url" : "media/Waterflame - Cats!.mp3",
+            "track-name" : "Waterflame - Cats!"
+        }
+
+    ],
+
+    "volume" : {
+        "volume-input" : "range",
+        "volume-id" : "slider-volume",
+        "volume-min" : "0",
+        "volume-max" : "2",
+        "volume-value" : "1",
+        "volume-step" : "0.01"
+    },
+
+    "instructions" : "Use the \"Track\" dropdown to select a song and click \"Play\"! Use the various control and see how it affects the visualizer!"
+}
