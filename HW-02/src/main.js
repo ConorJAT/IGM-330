@@ -16,8 +16,6 @@ const drawParams = {
   showBars      : true,
   showCircles   : true,
   showNoise     : false,
-  showInvert    : false,
-  showEmboss    : false
 }
 
 // 1 - here we are faking an enumeration
@@ -110,15 +108,15 @@ const setupUI = (canvasElement) => {
   let bars = document.querySelector("#cb-bars");
   let circles = document.querySelector("#cb-circles");
   let noise = document.querySelector("#cb-noise");
-  let invert = document.querySelector("#cb-invert");
-  let emboss = document.querySelector("#cb-emboss");
+  let treble = document.querySelector("#cb-highshelf");
+  let bass = document.querySelector("#cb-lowshelf");
   
   gradient.onchange = e => drawParams.showGradient = e.target.checked;
   bars.onchange = e => drawParams.showBars = e.target.checked;
   circles.onchange = e => drawParams.showCircles = e.target.checked;
   noise.onchange = e => drawParams.showNoise = e.target.checked;
-  invert.onchange = e => drawParams.showInvert = e.target.checked;
-  emboss.onchange = e => drawParams.showEmboss = e.target.checked;
+  treble.onchange = e => audio.toggleHighshelf(e.target.checked);
+  bass.onchange = e => audio.toggleLowshelf(e.target.checked);
 }; // end setupUI
 
 

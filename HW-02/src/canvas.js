@@ -131,22 +131,7 @@ const draw = (params={}) => {
 			data[i+1] = 255;
 			data[i+2] = 255;
 		} // end if
-
-		// invert?
-		if (params.showInvert){
-			let red = data[i], green = data[i+1], blue = [i+2];
-			data[i] = 255 - red;		// set red
-			data[i+1] = 255 - green;	// set green
-			data[i+2] = 255 - blue;		// set blue
-		}
 	} // end for
-	
-	if (params.showEmboss){
-		for (let i = 0; i < length; i++){
-			if (i%4 == 3) continue;  // skip alpha channel
-			data[i] = 127 + 2*data[i] - data[i+4] - data[i + width * 4];
-		} 
-	}
 
 	// D) copy image data back to canvas
 	ctx.putImageData(imageData, 0, 0);
