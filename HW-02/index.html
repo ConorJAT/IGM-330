@@ -9,46 +9,39 @@
 </head>
 
 <body>
-<main>
-  <canvas width="1080" height="720"></canvas>
-  <div id="controls">
-    <section>
-      <button id="btn-play" data-playing="no"></button>
-      <button id="btn-fs">Full Screen</button>
+  <main>
+    <canvas width="1080" height="720"></canvas>
+    <div id="controls">
+      <section>
+        <button id="btn-play" data-playing="no"></button>
+        <button id="btn-fs">Full Screen</button>
 		
-      <label>Track: 
-        <select id="select-track">
-          <!-- LOAD TRACKS HERE! -->
-        </select>
-      </label>
+        <label>Track: 
+          <select id="select-track">
+            <!-- LOAD TRACKS HERE! -->
+          </select>
+        </label>
 
-      <label>| Visualization:
-        <select id="select-visual">
-          <option value="frequency" selected>Byte Frequency Data</option>
-          <option value="time-domain">Byte Time Domain Data</option>
-        </select>
-      </label>
-    </section>
+        <label>| Visualization:
+          <select id="select-visual">
+            <option value="frequency" selected>Byte Frequency Data</option>
+            <option value="time-domain">Byte Time Domain Data</option>
+          </select>
+        </label>
+      </section>
 		
-    <section id="slider-controls">
-      <!-- LOAD SLIDER CONTROLS HERE! -->
-      
-      <!-- Volume: <input type="range" id="slider-volume" min="0" max="2" value="1" step="0.01">
-      <span id="label-volume">???</span>
-      | Treble: <input type="range" id="slider-treble" min="0" max="20" value="0" step="0.01">
-      <span id="label-treble">???</span>
-      | Bass: <input type="range" id="slider-bass" min="0" max="20" value="0" step="0.01">
-      <span id="label-bass">???</span> -->
-    </section>
+      <section id="slider-controls">
+        <!-- LOAD SLIDER CONTROLS HERE! -->
+      </section>
 
-    <section>
-      <span><input type="checkbox" checked="true" id="cb-gradient"><label for="cb-gradient">Show Gradient</label></span>
-      <span><input type="checkbox" checked="true" id="cb-bars"><label for="cb-bars">Show Bars</label></span>
-      <span><input type="checkbox" checked="true" id="cb-circles"><label for="cb-circles">Show Circles</label></span>
-      <span><input type="checkbox" id="cb-noise"><label for="cb-noise">Show Noise</label></span>
-    </section>
-  </div>
-</main>
+      <section>
+        <span><input type="checkbox" checked="true" id="cb-gradient"><label for="cb-gradient">Show Gradient</label></span>
+        <span><input type="checkbox" checked="true" id="cb-bars"><label for="cb-bars">Show Bars</label></span>
+        <span><input type="checkbox" checked="true" id="cb-circles"><label for="cb-circles">Show Circles</label></span>
+        <span><input type="checkbox" id="cb-noise"><label for="cb-noise">Show Noise</label></span>
+      </section>
+    </div>
+  </main>
 </body>
 
 </html>

@@ -56,19 +56,19 @@ const setupUI = (canvasElement) => {
 
     // check if context is in suspended state (autoplay policy)
     if (audio.audioCtx.state == "suspended") {
-        audio.audioCtx.resume();
+      audio.audioCtx.resume();
     }
 
     console.log(`audioCtx.state after = ${audio.audioCtx.state}`);
     if (e.target.dataset.playing == "no"){
-        // if track is currently paused, play it
-        audio.playCurrentSound();
-        e.target.dataset.playing = "yes";  // CSS will set the text to "Pause"
+      // if track is currently paused, play it
+      audio.playCurrentSound();
+      e.target.dataset.playing = "yes";  // CSS will set the text to "Pause"
     }
     else{
-        // if track IS playing, pause it
-        audio.pauseCurrentSound();
-        e.target.dataset.playing = "no";  // CSS will set the text to "Play"
+      // if track IS playing, pause it
+      audio.pauseCurrentSound();
+      e.target.dataset.playing = "no";  // CSS will set the text to "Play"
     }
   };
 
@@ -81,13 +81,13 @@ const setupUI = (canvasElement) => {
 
     // pause the current track if playing
     if (e.target.dataset.playing == "yes"){
-        playButton.dispatchEvent(new MouseEvent("click"));
+      playButton.dispatchEvent(new MouseEvent("click"));
     }
-  }
+  };
 
   let visualSelect = document.querySelector("#select-visual");
 
-  visualSelect.onchange = e => { drawParams.visualData = e.target.value; }
+  visualSelect.onchange = e => { drawParams.visualData = e.target.value; };
 
   // D - hookup canvas toggles
   let gradient = document.querySelector("#cb-gradient");
@@ -103,8 +103,8 @@ const setupUI = (canvasElement) => {
 
 
 const loop = () => {
-    requestAnimationFrame(loop);
-    canvas.draw(drawParams);
+  requestAnimationFrame(loop);
+  canvas.draw(drawParams);
 };
 
 export {init};
