@@ -10,7 +10,39 @@
 import * as utils from './utils.js';
 
 let ctx,canvasWidth,canvasHeight,gradient,analyserNode,audioData;
+let rotation;
+let test, test2; 
 
+const MySprite = class{
+	constructor(xPos, yPos, radius, barWidth, barMaxHeight, barPadding){
+		this.xPos = xPos;
+		this.yPos = yPos;
+		this.radius = radius;
+		this.barWidth = barWidth;
+		this.barMaxHeight = barMaxHeight;
+		this.barPadding = barPadding;
+	}
+
+	draw(){
+		ctx.fillStyle = "white";
+		ctx.save();
+		ctx.translate(this.xPos, this.yPos);
+		ctx.rotate(rotation);
+		ctx.beginPath();
+		ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+		ctx.fill();
+		ctx.closePath();
+		ctx.restore();
+
+		drawRadialBars(this.xPos, this.yPos, this.radius, this.barWidth, this.barMaxHeight, this.barPadding);
+	}
+
+	update(){
+		ctx.save();
+		ctx.rotate(.05);
+		ctx.restore();
+	}
+};
 
 const setupCanvas = (canvasElement,analyserNodeRef) => {
 	// create drawing context
@@ -23,6 +55,10 @@ const setupCanvas = (canvasElement,analyserNodeRef) => {
 	analyserNode = analyserNodeRef;
 	// this is the array where the analyser data will be stored
 	audioData = new Uint8Array(analyserNode.fftSize/2);
+
+	test = new MySprite(880, 240, 50, 1.4, 40, 1);
+	test2 = new MySprite(240, 540, 100, 3.8, 60, 1);
+	rotation = 0;
 }
 
 const draw = (params={}) => {
@@ -49,22 +85,24 @@ const draw = (params={}) => {
 
 	// 4 - draw bars
 	if(params.showBars){
-		let barSpacing = 4;
-		let margin = 5;
-		let screenWidthForBars = canvasWidth - (audioData.length * barSpacing) - margin * 2;
-		let barWidth = screenWidthForBars / audioData.length;
-		let barHeight = 200;
-		let topSpacing = 250;
+		// let barSpacing = 4;
+		// let margin = 5;
+		// let screenWidthForBars = canvasWidth - (audioData.length * barSpacing) - margin * 2;
+		// let barWidth = screenWidthForBars / audioData.length;
+		// let barHeight = 200;
+		// let topSpacing = 250;
 
-		ctx.save();
-		ctx.fillStyle = 'rgba(255, 255, 255, .5)';
-		ctx.strokeStyle = 'rgba(0, 0, 0, .5)';
-		// loop through data and draw
-		for (let i = 0; i<audioData.length; i++) {
-			ctx.fillRect(margin + i * (barWidth + barSpacing), topSpacing + 256-audioData[i], barWidth, barHeight);
-			ctx.strokeRect(margin + i * (barWidth + barSpacing), topSpacing + 256-audioData[i], barWidth, barHeight);
-		}
-		ctx.restore();
+		// ctx.save();
+		// ctx.fillStyle = 'rgba(255, 255, 255, .5)';
+		// ctx.strokeStyle = 'rgba(0, 0, 0, .5)';
+		// // loop through data and draw
+		// for (let i = 0; i<audioData.length; i++) {
+		// 	ctx.fillRect(margin + i * (barWidth + barSpacing), topSpacing + 256-audioData[i], barWidth, barHeight);
+		// 	ctx.strokeRect(margin + i * (barWidth + barSpacing), topSpacing + 256-audioData[i], barWidth, barHeight);
+		// }
+		// ctx.restore();
+
+		drawCircularBars(540, 360, 5, 100, 4);
 	}
 
 	// 5 - draw circles
@@ -134,6 +172,65 @@ const draw = (params={}) => {
 
 	// D) copy image data back to canvas
 	ctx.putImageData(imageData, 0, 0);
+
+	test.draw();
+	test2.draw();
+
+	rotation -= 0.01;
 }
+
+const drawCircularBars = (xStart, yStart, barWidth, maxBarHeight, barPadding) => {
+	ctx.fillStyle = "white";
+	ctx.strokeStyle = "black";
+	ctx.save();
+	
+	ctx.translate(xStart, yStart);
+	ctx.rotate(rotation);
+	ctx.translate(0, -yStart/2)
+
+	for (let d of audioData){
+		let percent = d/255;
+		if (percent < 0.02) percent = .02;
+
+		ctx.translate(barWidth, 0);
+		ctx.rotate((Math.PI * 2) / 128);
+		
+		ctx.save();
+		ctx.scale(1, -1);
+		ctx.fillRect(0, 0, barWidth, maxBarHeight * percent);
+		ctx.restore();
+
+		ctx.translate(barPadding, 0);
+	}
+
+	ctx.restore();
+};
+
+const drawRadialBars = (xStart, yStart, radialOffset, barWidth, maxBarHeight, barPadding) => {
+	ctx.fillStyle = "white";
+	ctx.strokeStyle = "black";
+	ctx.save();
+	
+	ctx.translate(xStart, yStart);
+	ctx.rotate(rotation);
+	ctx.translate(0, -radialOffset)
+
+	for (let d of audioData){
+		let percent = d/255;
+		if (percent < 0.02) percent = .02;
+
+		ctx.translate(barWidth, 0);
+		ctx.rotate((Math.PI * 2) / 128);
+		
+		ctx.save();
+		ctx.scale(1, -1);
+		ctx.fillRect(0, 0, barWidth, maxBarHeight * percent);
+		ctx.restore();
+
+		ctx.translate(barPadding, 0);
+	}
+
+	ctx.restore();
+};
 
 export {setupCanvas,draw};

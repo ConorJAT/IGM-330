@@ -103,7 +103,7 @@ const setupUI = (canvasElement) => {
 
 
 const loop = () => {
-  requestAnimationFrame(loop);
+  setTimeout(loop, 1000/60.0);
   canvas.draw(drawParams);
 };
 
