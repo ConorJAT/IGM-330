@@ -14,7 +14,7 @@ import * as canvas from './canvas.js';
 const drawParams = {
   visualData    : "frequency",
   showGradient  : true,
-  showBars      : true,
+  showPlanets   : true,
   showCircles   : true,
   showNoise     : false,
 }
@@ -72,6 +72,7 @@ const setupUI = (canvasElement) => {
     }
   };
 
+
   // C - hookup track <select>
   let trackSelect = document.querySelector("#select-track");
 
@@ -89,16 +90,22 @@ const setupUI = (canvasElement) => {
 
   visualSelect.onchange = e => { drawParams.visualData = e.target.value; };
 
+
   // D - hookup canvas toggles
-  let gradient = document.querySelector("#cb-gradient");
-  let bars = document.querySelector("#cb-bars");
-  let circles = document.querySelector("#cb-circles");
+  let bars = document.querySelector("#cb-planets");
+  let circles = document.querySelector("#cb-core");
   let noise = document.querySelector("#cb-noise");
   
-  gradient.onchange = e => drawParams.showGradient = e.target.checked;
-  bars.onchange = e => drawParams.showBars = e.target.checked;
+  bars.onchange = e => drawParams.showPlanets = e.target.checked;
   circles.onchange = e => drawParams.showCircles = e.target.checked;
   noise.onchange = e => drawParams.showNoise = e.target.checked;
+
+
+  let themeSelect = document.querySelector("#select-theme");
+
+  themeSelect.onchange = e => {
+    canvas.changeTheme(drawParams, e.target.value);
+  }
 }; // end setupUI
 
 

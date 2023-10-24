@@ -11,36 +11,37 @@ import * as utils from './utils.js';
 
 let ctx,canvasWidth,canvasHeight,gradient,analyserNode,audioData;
 let rotation;
-let test, test2; 
+let canvasSprites = []; 
 
-const MySprite = class{
-	constructor(xPos, yPos, radius, barWidth, barMaxHeight, barPadding){
+const Planet = class{
+	constructor(xPos, yPos, radius, barWidth, barMaxHeight, barPadding, fillColor){
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.radius = radius;
 		this.barWidth = barWidth;
 		this.barMaxHeight = barMaxHeight;
 		this.barPadding = barPadding;
+		this.fillColor = fillColor;
 	}
 
 	draw(){
-		ctx.fillStyle = "white";
+		ctx.fillStyle = this.fillColor;
+		ctx.strokeStyle = "white";
 		ctx.save();
 		ctx.translate(this.xPos, this.yPos);
 		ctx.rotate(rotation);
 		ctx.beginPath();
 		ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
 		ctx.fill();
+		ctx.stroke();
 		ctx.closePath();
 		ctx.restore();
 
-		drawRadialBars(this.xPos, this.yPos, this.radius, this.barWidth, this.barMaxHeight, this.barPadding);
+		drawCircularBars(this.xPos, this.yPos, this.radius, this.barWidth, this.barMaxHeight, this.barPadding, "white");
 	}
 
-	update(){
-		ctx.save();
-		ctx.rotate(.05);
-		ctx.restore();
+	changeFillColor(value){
+		this.fillColor = value;
 	}
 };
 
@@ -50,20 +51,19 @@ const setupCanvas = (canvasElement,analyserNodeRef) => {
 	canvasWidth = canvasElement.width;
 	canvasHeight = canvasElement.height;
 	// create a gradient that runs top to bottom
-	gradient = utils.getLinearGradient(ctx,0,0,0,canvasHeight,[{percent:0,color:"#0A7C69"},{percent:.25,color:"#5BC8D2"},{percent:.5,color:"#F1EFFF"},{percent:.75,color:"#7BADE2"},{percent:1,color:"#083371"}]);
+	gradient = utils.getLinearGradient(ctx,0,0,0,canvasHeight,[{percent:0,color:"#00101c"},{percent:.33,color:"#041f3a"},{percent:.67,color:"#083f53"},{percent:1,color:"#239294"}]);
 	// keep a reference to the analyser node
 	analyserNode = analyserNodeRef;
 	// this is the array where the analyser data will be stored
 	audioData = new Uint8Array(analyserNode.fftSize/2);
 
-	test = new MySprite(880, 240, 50, 1.4, 40, 1);
-	test2 = new MySprite(240, 540, 100, 3.8, 60, 1);
+
+	canvasSprites = [new Planet(540, 620, 184, 5, 100, 4, "rgba(14, 111, 128, .9)"), new Planet(880, 300, 120, 2.9, 60, 3, "rgba(27, 45, 112, .9)"), new Planet(200, 180, 50, 1.4, 40, 1, "rgba(6, 37, 87, .9)")];
 	rotation = 0;
 }
 
 const draw = (params={}) => {
-  // 1 - populate the audioData array with the frequency data from the analyserNode
-	// notice these arrays are passed "by reference" 
+  	// 1 - populate the audioData array with the frequency data from the analyserNode
 	if (params.visualData == "frequency") analyserNode.getByteFrequencyData(audioData);
 	else if (params.visualData == "time-domain") analyserNode.getByteTimeDomainData(audioData);
 	
@@ -84,26 +84,8 @@ const draw = (params={}) => {
 	}
 
 	// 4 - draw bars
-	if(params.showBars){
-		// let barSpacing = 4;
-		// let margin = 5;
-		// let screenWidthForBars = canvasWidth - (audioData.length * barSpacing) - margin * 2;
-		// let barWidth = screenWidthForBars / audioData.length;
-		// let barHeight = 200;
-		// let topSpacing = 250;
-
-		// ctx.save();
-		// ctx.fillStyle = 'rgba(255, 255, 255, .5)';
-		// ctx.strokeStyle = 'rgba(0, 0, 0, .5)';
-		// // loop through data and draw
-		// for (let i = 0; i<audioData.length; i++) {
-		// 	ctx.fillRect(margin + i * (barWidth + barSpacing), topSpacing + 256-audioData[i], barWidth, barHeight);
-		// 	ctx.strokeRect(margin + i * (barWidth + barSpacing), topSpacing + 256-audioData[i], barWidth, barHeight);
-		// }
-		// ctx.restore();
-
-		drawCircularBars(540, 360, 5, 100, 4);
-	}
+	// if(params.showBars){
+	// }
 
 	// 5 - draw circles
 	if(params.showCircles){
@@ -116,19 +98,17 @@ const draw = (params={}) => {
 
 			let circleRadius = percent * maxRadius;
 			ctx.beginPath();
-			ctx.fillStyle = utils.makeColor(85, 215, 172, .34 - percent/3.0);
+			ctx.fillStyle = utils.makeColor(169, 193, 232, .34 - percent/3.0);
 			ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius, 0, 2 * Math.PI, false);
 			ctx.fill();
 			ctx.closePath();
 
-			// blue-ish circles, bigger, more transparent
 			ctx.beginPath();
-			ctx.fillStyle = utils.makeColor(0, 0, 255, .1 - percent/10.0);
+			ctx.fillStyle = utils.makeColor(131, 173, 242, .1 - percent/10.0);
 			ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius * 1.5, 0, 2 * Math.PI, false);
 			ctx.fill();
 			ctx.closePath();
 
-			// yellow-ish circles, smaller
 			ctx.save();
 			ctx.beginPath();
 			ctx.fillStyle = utils.makeColor(240, 240, 240, .5 - percent/5.0);
@@ -141,11 +121,6 @@ const draw = (params={}) => {
 	}
 
 	// 6 - bitmap manipulation
-	// TODO: right now. we are looping though every pixel of the canvas (320,000 of them!), 
-	// regardless of whether or not we are applying a pixel effect
-	// At some point, refactor this code so that we are looping though the image data only if
-	// it is necessary
-
 	// A) grab all of the pixels on the canvas and put them in the `data` array
 	// `imageData.data` is a `Uint8ClampedArray()` typed array that has 1.28 million elements!
 	// the variable `data` below is a reference to that array 
@@ -173,41 +148,12 @@ const draw = (params={}) => {
 	// D) copy image data back to canvas
 	ctx.putImageData(imageData, 0, 0);
 
-	test.draw();
-	test2.draw();
-
+	if (params.showPlanets) for (let s of canvasSprites) s.draw();
 	rotation -= 0.01;
 }
 
-const drawCircularBars = (xStart, yStart, barWidth, maxBarHeight, barPadding) => {
-	ctx.fillStyle = "white";
-	ctx.strokeStyle = "black";
-	ctx.save();
-	
-	ctx.translate(xStart, yStart);
-	ctx.rotate(rotation);
-	ctx.translate(0, -yStart/2)
-
-	for (let d of audioData){
-		let percent = d/255;
-		if (percent < 0.02) percent = .02;
-
-		ctx.translate(barWidth, 0);
-		ctx.rotate((Math.PI * 2) / 128);
-		
-		ctx.save();
-		ctx.scale(1, -1);
-		ctx.fillRect(0, 0, barWidth, maxBarHeight * percent);
-		ctx.restore();
-
-		ctx.translate(barPadding, 0);
-	}
-
-	ctx.restore();
-};
-
-const drawRadialBars = (xStart, yStart, radialOffset, barWidth, maxBarHeight, barPadding) => {
-	ctx.fillStyle = "white";
+const drawCircularBars = (xStart, yStart, radialOffset, barWidth, maxBarHeight, barPadding, fillColor) => {
+	ctx.fillStyle = fillColor;
 	ctx.strokeStyle = "black";
 	ctx.save();
 	
@@ -233,4 +179,40 @@ const drawRadialBars = (xStart, yStart, radialOffset, barWidth, maxBarHeight, ba
 	ctx.restore();
 };
 
-export {setupCanvas,draw};
+const changeTheme = (params={}, value) => {
+	if (value != "none") params.showGradient = true;
+	
+	if (value == "evening") {
+		gradient = utils.getLinearGradient(ctx,0,0,0,canvasHeight,[{percent:0,color:"#00101c"},{percent:.33,color:"#041f3a"},{percent:.67,color:"#083f53"},{percent:1,color:"#239294"}]);
+		canvasSprites[0].changeFillColor("rgba(14, 111, 128, .9)");
+		canvasSprites[1].changeFillColor("rgba(27, 45, 112, .9)");
+		canvasSprites[2].changeFillColor("rgba(6, 37, 87, .9)");
+	}
+	
+	else if (value == "midnight"){
+		gradient = utils.getLinearGradient(ctx,0,0,0,canvasHeight,[{percent:0,color:"#070707"},{percent:.5,color:"#1D1D25"},{percent:1,color:"#263242"}]);
+		canvasSprites[0].changeFillColor("rgba(48, 68, 92, 0.9)");
+		canvasSprites[1].changeFillColor("rgba(42, 42, 56, 0.9)");
+		canvasSprites[2].changeFillColor("rgba(35, 35, 43, 0.9)");
+	} 
+	else if (value == "morning") {
+		gradient = utils.getLinearGradient(ctx,0,0,0,canvasHeight,[{percent:0,color:"#0087A5"},{percent:.33,color:"#7FACB2"},{percent:.67,color:"#D4C6AB"},{percent:1,color:"#FAAD51"}]);
+		canvasSprites[0].changeFillColor("rgba(245, 186, 118, 0.9)");
+		canvasSprites[1].changeFillColor("rgba(165, 204, 207, 0.9)");
+		canvasSprites[2].changeFillColor("rgba(15, 141, 166, 0.9)");
+	}
+
+	else if (value == "afternoon") {
+		gradient = utils.getLinearGradient(ctx,0,0,0,canvasHeight,[{percent:0,color:"#3B589E"},{percent:.33,color:"#6A719F"},{percent:.67,color:"#B28393"},{percent:1,color:"#EC5065"}]);
+		canvasSprites[0].changeFillColor("rgba(245, 144, 145, 0.9)");
+		canvasSprites[1].changeFillColor("rgba(172, 156, 184, 0.9)");
+		canvasSprites[2].changeFillColor("rgba(95, 122, 194, 0.9)");
+	}
+	else if (value == "none") {
+		params.showGradient = false;
+		canvasSprites[0].changeFillColor("white");
+		canvasSprites[1].changeFillColor("white");
+		canvasSprites[2].changeFillColor("white");
+	}	
+}
+export {setupCanvas,draw,changeTheme};

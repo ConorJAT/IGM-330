@@ -35,9 +35,17 @@
       </section>
 
       <section>
-        <span><input type="checkbox" checked="true" id="cb-gradient"><label for="cb-gradient">Show Gradient</label></span>
-        <span><input type="checkbox" checked="true" id="cb-bars"><label for="cb-bars">Show Bars</label></span>
-        <span><input type="checkbox" checked="true" id="cb-circles"><label for="cb-circles">Show Circles</label></span>
+        <label>Visual Theme:
+          <select id="select-theme">
+            <option value="evening" selected>Evening</option>
+            <option value="midnight">Midnight</option>
+            <option value="morning">Morning</option>
+            <option value="afternoon">Afternoon</option>
+            <option value="none">No Gradient</option>
+          </select>
+        </label>
+        <span><input type="checkbox" checked="true" id="cb-planets"><label for="cb-planets">Show Planets</label></span>
+        <span><input type="checkbox" checked="true" id="cb-core"><label for="cb-core">Show Core</label></span>
         <span><input type="checkbox" id="cb-noise"><label for="cb-noise">Show Noise</label></span>
       </section>
     </div>
