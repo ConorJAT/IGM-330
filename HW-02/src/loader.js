@@ -39,7 +39,7 @@ window.onload = () => {
 		document.querySelector("#select-track").innerHTML = trackList;
 
 		// Load slider controls
-		let controlList = "";
+		let controlList = "| ";
 		let controls = json.controls;
 
 		for(let c of controls){
@@ -52,6 +52,9 @@ window.onload = () => {
 
 		// Set up UI for new sliders
 		setupSliderUI();
+
+		// Load header region of application
+		document.querySelector("header").innerHTML = `<h1>${json.title}</h1><p>${json.instructions}</p>`;
 	};
 
 	const setupSliderUI = () => {

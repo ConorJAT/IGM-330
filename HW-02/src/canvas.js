@@ -98,13 +98,13 @@ const draw = (params={}) => {
 
 			let circleRadius = percent * maxRadius;
 			ctx.beginPath();
-			ctx.fillStyle = utils.makeColor(169, 193, 232, .34 - percent/3.0);
+			ctx.fillStyle = utils.makeColor(210, 210, 210, .34 - percent/3.0);
 			ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius, 0, 2 * Math.PI, false);
 			ctx.fill();
 			ctx.closePath();
 
 			ctx.beginPath();
-			ctx.fillStyle = utils.makeColor(131, 173, 242, .1 - percent/10.0);
+			ctx.fillStyle = utils.makeColor(180, 180, 180, .1 - percent/10.0);
 			ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius * 1.5, 0, 2 * Math.PI, false);
 			ctx.fill();
 			ctx.closePath();

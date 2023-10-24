@@ -35,7 +35,7 @@
             "control-id" : "slider-volume",
             "control-min" : "0",
             "control-max" : "2",
-            "control-value" : "1",
+            "control-value" : ".4",
             "control-label" : "label-volume"
         },
 
