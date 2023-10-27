@@ -4,12 +4,13 @@
     <meta charset="utf-8" />
     <title>Greeter (with modules)</title>
     <link rel="stylesheet" href="styles/default-styles.css" />
-    <script type="module" src="src/main.js"></script>
+    <!-- <script type="module" src="src/main.js"></script> -->
   </head>
 <body>
   <header>
     <h1>Greeter App (with modules)</h1>
   </header>
+
   <main>
     <button id="btn-hello">Hello</button>
     <button id="btn-goodbye">Goodbye</button>
@@ -20,8 +21,11 @@
     </p>
     <p id="output">???</p>
   </main>
+
   <footer>
     &copy; 2022 Ace Coder
   </footer>
+
+  <script src="dist/bundle.js"></script>
 </body>
 </html>
