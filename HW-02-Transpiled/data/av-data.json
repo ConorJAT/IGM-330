@@ -1,0 +1,62 @@
+{
+    "title" : "Planet EDM Audio Visualizer",
+
+    "tracks" : [
+        {
+            "track-url" : "media/DifferentHeaven&SianArea-FeelLikeHorrible.mp3",
+            "track-name" : "Different Heaven & Sian Area - Feel Like Horrible"
+        },
+
+        {
+            "track-url" : "media/F-777-Deadlocked.mp3",
+            "track-name" : "F-777 - Deadlocked"
+        },
+
+        {
+            "track-url" : "media/Mittsies-Ritual.ogg",
+            "track-name" : "Mittsies - Ritual"
+        },
+
+        {
+            "track-url" : "media/SilvaHound-CoolFriends(Murtagh&VeschellRemix).mp3",
+            "track-name" : "Silva Hound - Cool Friends (Murtagh & Veschell Remix)"
+        },
+
+        {
+            "track-url" : "media/Waterflame-Cats!.mp3",
+            "track-name" : "Waterflame - Cats!"
+        }
+
+    ],
+
+    "controls" : [
+        {
+            "control-name" : "Volume",
+            "control-id" : "slider-volume",
+            "control-min" : "0",
+            "control-max" : "2",
+            "control-value" : ".4",
+            "control-label" : "label-volume"
+        },
+
+        {
+            "control-name" : "Treble",
+            "control-id" : "slider-treble",
+            "control-min" : "0",
+            "control-max" : "20",
+            "control-value" : "0",
+            "control-label" : "label-treble"
+        },
+
+        {
+            "control-name" : "Bass",
+            "control-id" : "slider-bass",
+            "control-min" : "0",
+            "control-max" : "20",
+            "control-value" : "0",
+            "control-label" : "label-bass"
+        }
+    ],
+
+    "instructions" : "Use the \"Track\" dropdown to select a song and click \"Play\"! Use the various control and see how it affects the visualizer!"
+}
