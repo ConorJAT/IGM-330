@@ -1,68 +1,62 @@
-export const init = () => {
-    mapboxgl.accessToken = 'pk.eyJ1IjoiY3RyOTY2NCIsImEiOiJjbG9laTF0emkwMnBjMmtueWFqeWFyZ2l4In0.thmoOrvDCmVt9RHQadyrqw';
-        
-    const map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/light-v11',
-        center: [-96, 37.8],
-        zoom: 3
-    });
+import * as map from "./map.js";
+import * as ajax from "./ajax.js";
 
-    // Create a list of points to be marked on the map.
-    const geojson = {
-        type: 'FeatureCollection',
-        features: [
-        {
-            type: 'Feature',
-            geometry: {
-                type: 'Point',
-                coordinates: [-77.032, 38.913]
-            },
-            properties: {
-                title: 'Mapbox',
-                description: 'Washington, D.C.'
-            }
-        },
-        {
-            type: 'Feature',
-            geometry: {
-                type: 'Point',
-                coordinates: [-122.414, 37.776]
-            },
-            properties: {
-                title: 'Mapbox',
-                description: 'San Francisco, California'
-            }
-        },
-        {
-            type: 'Feature',
-            geometry: {
-                type: 'Point',
-                coordinates: [-87.860, 41.979]
-            },
-            properties: {
-                title: 'Mapbox',
-                description: 'Donald E. Stephens Convention Center\n(Rosemont, Illinois)'
-            }
-        }
-      ]
+let poi;
+
+export const init = () => {
+    map.initMap();
+    map.loadMarkers();
+    map.addMarkersToMap();
+    setupUI();
+};
+
+const setupUI = () => {
+    const lnglatRIT = [-77.67454147338866, 43.08484339838443];
+    const lnglatIGM = [-77.67990589141846, 43.08447511795301];
+    
+    // RIT Zoom 15.5
+    btn1.onclick = () => {
+        map.setZoomLevel(15.5);
+        map.setPitchAndBearing(0, 0);
+        map.flyTo(lnglatRIT);
     };
 
-    // add markers to map
-    for (const feature of geojson.features) {
-        // create a HTML element for each feature
-        const el = document.createElement('div');
-        el.className = 'marker';
-    
-        // make a marker for each feature and add to the map
-        new mapboxgl.Marker(el)
-            .setLngLat(feature.geometry.coordinates)
-            .setPopup(
-                new mapboxgl.Popup({ offset: 25 }) // add popups
-                .setHTML(
-                    `<h3>${feature.properties.title}</h3><p>${feature.properties.description}</p>`
-                )
-            )
-            .addTo(map);
-    }
+    // RIT Isometric View
+    btn2.onclick = () => {
+        map.setZoomLevel(15.5);
+        map.setPitchAndBearing(45, 0);
+        map.flyTo(lnglatRIT);
+    };
+
+    // World Zoom 0
+    btn3.onclick = () => {
+        map.setZoomLevel();
+        map.setPitchAndBearing(0, 0);
+        map.flyTo();
+    };
+
+    // IGM Zoom 18
+    btn4.onclick = () => {
+        map.setZoomLevel(18);
+        map.setPitchAndBearing(0, 0);
+        map.flyTo(lnglatIGM);
+    };
+
+    // Load Some Markers
+    btn5.onclick = () => { if(!poi) { loadPOI(); } };
+};
+
+const loadPOI = () => {
+    const url = "https://people.rit.edu/~acjvks/shared/330/igm-points-of-interest.php";
+
+    const poiLoaded = (jsonString) => {
+        poi = JSON.parse(jsonString);
+        console.log(poi);
+
+        for (let p of poi){
+            map.addMarker(p.coordinates, p.title, "A POI!", "poi");
+        }
+    };
+
+    ajax.downloadFile(url, poiLoaded);
 };
