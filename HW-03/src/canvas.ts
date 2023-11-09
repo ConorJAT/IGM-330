@@ -13,15 +13,27 @@ let ctx,canvasWidth,canvasHeight,gradient,analyserNode,audioData;
 let rotation;
 let canvasSprites = []; 
 
+// interface IPlanet{
+// 	xPos: 			number,
+// 	yPos: 			number,
+// 	radius: 		number,
+// 	barWidth: 		number,
+// 	barMaxHeight: 	number,
+// 	barPadding: 	number,
+// 	fillColor: 		string
+// }
+
 const Planet = class{
-	constructor(xPos, yPos, radius, barWidth, barMaxHeight, barPadding, fillColor){
-		this.xPos = xPos;
-		this.yPos = yPos;
-		this.radius = radius;
-		this.barWidth = barWidth;
-		this.barMaxHeight = barMaxHeight;
-		this.barPadding = barPadding;
-		this.fillColor = fillColor;
+	xPos: number;
+	yPos: number;
+	radius: number;
+	barWidth: number;
+	barMaxHeight: number;
+	barPadding: number;
+	fillColor: string;
+
+	constructor({xPos, yPos, radius, barWidth, barMaxHeight, barPadding, fillColor}){
+		Object.assign(this, {xPos, yPos, radius, barWidth, barMaxHeight, barPadding, fillColor});
 	}
 
 	draw(){
@@ -58,7 +70,9 @@ const setupCanvas = (canvasElement,analyserNodeRef) => {
 	audioData = new Uint8Array(analyserNode.fftSize/2);
 
 
-	canvasSprites = [new Planet(540, 620, 184, 5, 100, 4, "rgba(14, 111, 128, .9)"), new Planet(880, 300, 120, 2.9, 60, 3, "rgba(27, 45, 112, .9)"), new Planet(200, 180, 50, 1.4, 40, 1, "rgba(6, 37, 87, .9)")];
+	canvasSprites = [new Planet({xPos: 540, yPos: 620, radius: 184, barWidth: 5, barMaxHeight: 100, barPadding: 4, fillColor: "rgba(14, 111, 128, .9)"}), 
+					 new Planet({xPos: 880, yPos: 300, radius: 120, barWidth: 2.9, barMaxHeight: 60, barPadding: 3, fillColor: "rgba(27, 45, 112, .9)"}), 
+					 new Planet({xPos: 200, yPos: 180, radius: 50, barWidth: 1.4, barMaxHeight: 40, barPadding: 1, fillColor: "rgba(6, 37, 87, .9)"})];
 	rotation = 0;
 }
 

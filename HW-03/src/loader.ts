@@ -59,36 +59,44 @@ window.onload = () => {
 
 	const setupSliderUI = () => {
 		// Set up volume slider
-		let volumeSlider = document.querySelector("#slider-volume");
+		let volumeSlider = document.querySelector("#slider-volume") as HTMLInputElement;
   		let volumeLabel = document.querySelector("#label-volume");
 
   		// add .oninput event to slider
   		volumeSlider.oninput = e => {
-    		// set the gain
-    		audio.setVolume(e.target.value);
+    		const target = e.target as HTMLInputElement;
+			
+			// set the gain
+    		audio.setVolume(target.value);
 
     		// update value of label to match the value of slider
-    		volumeLabel.innerHTML = Math.round((e.target.value/2 * 100));
+    		volumeLabel.innerHTML = String(Math.round((+target.value/2 * 100)));
 		};
 
 		// Set up treble slider
-		let trebleSlider = document.querySelector("#slider-treble");
+		let trebleSlider = document.querySelector("#slider-treble") as HTMLInputElement;
   		let trebleLabel = document.querySelector("#label-treble");
 
   		trebleSlider.oninput = e => {
-    		audio.setHighshelf(e.target.value);
-    		trebleLabel.innerHTML = Math.round((e.target.value/20 * 100));
+			const target = e.target as HTMLInputElement;
+
+    		audio.setHighshelf(target.value);
+
+    		trebleLabel.innerHTML = String(Math.round((+target.value/20 * 100)));
   		};
 
 		// Set up bass slider
   		trebleSlider.dispatchEvent(new Event("input"));
 
-		let bassSlider = document.querySelector("#slider-bass");
+		let bassSlider = document.querySelector("#slider-bass") as HTMLInputElement;
 		let bassLabel = document.querySelector("#label-bass");
 		
 		bassSlider.oninput = e => {
-			audio.setLowshelf(e.target.value);
-			bassLabel.innerHTML = Math.round((e.target.value/20 * 100));
+			const target = e.target as HTMLInputElement;
+
+			audio.setLowshelf(target.value);
+			
+			bassLabel.innerHTML = String(Math.round((+target.value/20 * 100)));
 		};
 		
 		bassSlider.dispatchEvent(new Event("input"));

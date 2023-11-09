@@ -11,7 +11,7 @@ import * as utils from './utils.js';
 import * as audio from './audio.js';
 import * as canvas from './canvas.js';
 
-const drawParams = {
+interface drawParams{
   visualData    : "frequency",
   showGradient  : true,
   showPlanets   : true,
@@ -39,7 +39,7 @@ const init = () => {
 
 const setupUI = (canvasElement) => {
   // A - hookup fullscreen button
-  const fsButton = document.querySelector("#btn-fs");
+  const fsButton = document.querySelector("#btn-fs") as HTMLButtonElement;
 	
   // add .onclick event to button
   fsButton.onclick = e => {
@@ -49,10 +49,12 @@ const setupUI = (canvasElement) => {
 
 
   // B - add .onclick event to "Play/Pause" button
-  const playButton = document.querySelector("#btn-play");
+  const playButton = document.querySelector("#btn-play") as HTMLButtonElement;
 
   playButton.onclick = e => {
     console.log(`audioCtx.state before = ${audio.audioCtx.state}`);
+
+    const target = e.target as HTMLButtonElement;
 
     // check if context is in suspended state (autoplay policy)
     if (audio.audioCtx.state == "suspended") {
@@ -60,51 +62,68 @@ const setupUI = (canvasElement) => {
     }
 
     console.log(`audioCtx.state after = ${audio.audioCtx.state}`);
-    if (e.target.dataset.playing == "no"){
+    if (target.dataset.playing == "no"){
       // if track is currently paused, play it
       audio.playCurrentSound();
-      e.target.dataset.playing = "yes";  // CSS will set the text to "Pause"
+      target.dataset.playing = "yes";  // CSS will set the text to "Pause"
     }
     else{
       // if track IS playing, pause it
       audio.pauseCurrentSound();
-      e.target.dataset.playing = "no";  // CSS will set the text to "Play"
+      target.dataset.playing = "no";  // CSS will set the text to "Play"
     }
   };
 
 
   // C - hookup track <select>
-  let trackSelect = document.querySelector("#select-track");
+  let trackSelect = document.querySelector("#select-track") as HTMLSelectElement;
 
   // add .onchange event to <select>
   trackSelect.onchange = e => {
-    audio.loadSoundFile(e.target.value);
+    const target = e.target as HTMLSelectElement;
+
+    audio.loadSoundFile(target.value);
 
     // pause the current track if playing
-    if (e.target.dataset.playing == "yes"){
+    if (target.dataset.playing == "yes"){
       playButton.dispatchEvent(new MouseEvent("click"));
     }
   };
 
-  let visualSelect = document.querySelector("#select-visual");
+  let visualSelect = document.querySelector("#select-visual") as HTMLSelectElement;
 
-  visualSelect.onchange = e => { drawParams.visualData = e.target.value; };
+  visualSelect.onchange = e => { 
+    const target = e.target as HTMLSelectElement;
+    drawParams.visualData = target.value; 
+  };
 
 
   // D - hookup canvas toggles
-  let bars = document.querySelector("#cb-planets");
-  let circles = document.querySelector("#cb-core");
-  let noise = document.querySelector("#cb-noise");
+  let bars = document.querySelector("#cb-planets") as HTMLInputElement;
+  let circles = document.querySelector("#cb-core") as HTMLInputElement;
+  let noise = document.querySelector("#cb-noise") as HTMLInputElement;
   
-  bars.onchange = e => drawParams.showPlanets = e.target.checked;
-  circles.onchange = e => drawParams.showCircles = e.target.checked;
-  noise.onchange = e => drawParams.showNoise = e.target.checked;
+  bars.onchange = e => { 
+    const target = e.target as HTMLInputElement;
+    drawParams.showPlanets = target.checked; 
+  };
+
+  circles.onchange = e => {
+    const target = e.target as HTMLInputElement;
+    drawParams.showCircles = target.checked; 
+  };
+
+  noise.onchange = e => {
+    const target = e.target as HTMLInputElement;
+    drawParams.showNoise = target.checked; 
+  };
 
 
-  let themeSelect = document.querySelector("#select-theme");
+  let themeSelect = document.querySelector("#select-theme") as HTMLSelectElement;
 
   themeSelect.onchange = e => {
-    canvas.changeTheme(drawParams, e.target.value);
+    const target = e.target as HTMLSelectElement;
+    canvas.changeTheme(drawParams, target.value);
   }
 }; // end setupUI
 
