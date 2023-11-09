@@ -1,0 +1,30 @@
+Audio Effects:
+
+For the audio effects, I simply implemented both bass and treble using the
+biquad filters. Both of these effects are controlled by sliders and start
+at a value of 0 upon loading.
+
+
+Sprites:
+
+In my canvas.js script, I created a sprite class called "Planet". This sprite
+essentially draws an arc with beat rectangles surrounding its edge. Additionally,
+the planets spin slowly counterclockwise, giving a cool planet spin effect.
+
+
+JSON App Data:
+
+In my JSON file, I decided to store data including: the app's title, an entire
+list of all my tracks, my settings for my slider controls and information section.
+
+
+My Own Improvements:
+
+I wasn't able to add a lot of "outstanding" aesthetics to my audio visualizer
+unfortunately. What I do have involves a theme selector, allowing the user to change
+the theme of the app to something more pleasing (based off of times of day). Additionally,
+I'd like to consider my Sprites to be something a little above and beyond as getting the
+spinning effect with the beat bars was a bit of a challenge. Aside from that, I originally
+planned to implement more gradient colors, actual images and on-canvas text the user could
+see, but unfortunately hadn't gotten around to it due to non-academic personal obstacles.
+Of the work I did, I would grade myself somewhere between a 3% - 5% on my "extra" work.
