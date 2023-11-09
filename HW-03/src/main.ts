@@ -7,17 +7,9 @@
 // In this instance, we feel the code is more readable if written this way
 // If you want to re-write these as ES6 arrow functions, to be consistent with the other files, go ahead!
 
-import * as utils from './utils.js';
-import * as audio from './audio.js';
-import * as canvas from './canvas.js';
-
-interface drawParams{
-  visualData    : "frequency",
-  showGradient  : true,
-  showPlanets   : true,
-  showCircles   : true,
-  showNoise     : false,
-}
+import * as utils from './utils';
+import * as audio from './audio';
+import * as canvas from './canvas';
 
 // 1 - here we are faking an enumeration
 const DEFAULTS = Object.freeze({
@@ -94,7 +86,7 @@ const setupUI = (canvasElement) => {
 
   visualSelect.onchange = e => { 
     const target = e.target as HTMLSelectElement;
-    drawParams.visualData = target.value; 
+    canvas.drawParams.visualData = target.value; 
   };
 
 
@@ -105,17 +97,17 @@ const setupUI = (canvasElement) => {
   
   bars.onchange = e => { 
     const target = e.target as HTMLInputElement;
-    drawParams.showPlanets = target.checked; 
+    canvas.drawParams.showPlanets = target.checked; 
   };
 
   circles.onchange = e => {
     const target = e.target as HTMLInputElement;
-    drawParams.showCircles = target.checked; 
+    canvas.drawParams.showCircles = target.checked; 
   };
 
   noise.onchange = e => {
     const target = e.target as HTMLInputElement;
-    drawParams.showNoise = target.checked; 
+    canvas.drawParams.showNoise = target.checked; 
   };
 
 
@@ -123,14 +115,14 @@ const setupUI = (canvasElement) => {
 
   themeSelect.onchange = e => {
     const target = e.target as HTMLSelectElement;
-    canvas.changeTheme(drawParams, target.value);
+    canvas.changeTheme(target.value);
   }
 }; // end setupUI
 
 
 const loop = () => {
   setTimeout(loop, 1000/60.0);
-  canvas.draw(drawParams);
+  canvas.draw();
 };
 
 export {init};

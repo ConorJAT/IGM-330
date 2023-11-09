@@ -7,21 +7,21 @@
 	  - maybe a better name for this file/module would be *visualizer.js* ?
 */
 
-import * as utils from './utils.js';
+import * as utils from './utils';
 
 let ctx,canvasWidth,canvasHeight,gradient,analyserNode,audioData;
 let rotation;
 let canvasSprites = []; 
 
-// interface IPlanet{
-// 	xPos: 			number,
-// 	yPos: 			number,
-// 	radius: 		number,
-// 	barWidth: 		number,
-// 	barMaxHeight: 	number,
-// 	barPadding: 	number,
-// 	fillColor: 		string
-// }
+interface DrawParams{
+	visualData    : string,
+	showGradient  : boolean,
+	showPlanets   : boolean,
+	showCircles   : boolean,
+	showNoise     : boolean
+  }
+  
+let drawParams : DrawParams = {visualData: "frequency", showGradient: true, showPlanets: true, showCircles: true, showNoise: false};
 
 const Planet = class{
 	xPos: number;
@@ -76,10 +76,10 @@ const setupCanvas = (canvasElement,analyserNodeRef) => {
 	rotation = 0;
 }
 
-const draw = (params={}) => {
+const draw = () => {
   	// 1 - populate the audioData array with the frequency data from the analyserNode
-	if (params.visualData == "frequency") analyserNode.getByteFrequencyData(audioData);
-	else if (params.visualData == "time-domain") analyserNode.getByteTimeDomainData(audioData);
+	if (drawParams.visualData == "frequency") analyserNode.getByteFrequencyData(audioData);
+	else if (drawParams.visualData == "time-domain") analyserNode.getByteTimeDomainData(audioData);
 	
 	// 2 - draw background
 	ctx.save();
@@ -89,7 +89,7 @@ const draw = (params={}) => {
 	ctx.restore();
 		
 	// 3 - draw gradient
-	if(params.showGradient){
+	if(drawParams.showGradient){
 		ctx.save();
 		ctx.fillStyle = gradient;
 		ctx.globalAlpha = .3;
@@ -102,7 +102,7 @@ const draw = (params={}) => {
 	// }
 
 	// 5 - draw circles
-	if(params.showCircles){
+	if(drawParams.showCircles){
 		let maxRadius = canvasHeight/4;
 		ctx.save();
 		ctx.globalAlpha = .5;
@@ -147,7 +147,7 @@ const draw = (params={}) => {
 	for (let i = 0; i < length; i += 4){ 
 
 		// C) randomly change every 20th pixel to red
-		if (params.showNoise && Math.random() < .05){		
+		if (drawParams.showNoise && Math.random() < .05){		
 			// data[i] is the red channel
 			// data[i+1] is the green channel
 			// data[i+2] is the blue channel
@@ -162,7 +162,7 @@ const draw = (params={}) => {
 	// D) copy image data back to canvas
 	ctx.putImageData(imageData, 0, 0);
 
-	if (params.showPlanets) for (let s of canvasSprites) s.draw();
+	if (drawParams.showPlanets) for (let s of canvasSprites) s.draw();
 	rotation -= 0.01;
 }
 
@@ -193,8 +193,8 @@ const drawCircularBars = (xStart, yStart, radialOffset, barWidth, maxBarHeight, 
 	ctx.restore();
 };
 
-const changeTheme = (params={}, value) => {
-	if (value != "none") params.showGradient = true;
+const changeTheme = (value) => {
+	if (value != "none") drawParams.showGradient = true;
 	
 	if (value == "evening") {
 		gradient = utils.getLinearGradient(ctx,0,0,0,canvasHeight,[{percent:0,color:"#00101c"},{percent:.33,color:"#041f3a"},{percent:.67,color:"#083f53"},{percent:1,color:"#239294"}]);
@@ -223,10 +223,10 @@ const changeTheme = (params={}, value) => {
 		canvasSprites[2].changeFillColor("rgba(95, 122, 194, 0.9)");
 	}
 	else if (value == "none") {
-		params.showGradient = false;
+		drawParams.showGradient = false;
 		canvasSprites[0].changeFillColor("white");
 		canvasSprites[1].changeFillColor("white");
 		canvasSprites[2].changeFillColor("white");
 	}	
 }
-export {setupCanvas,draw,changeTheme};
+export {setupCanvas,draw,changeTheme,drawParams};

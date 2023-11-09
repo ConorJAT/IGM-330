@@ -1,5 +1,5 @@
-import * as main from "./main.js";
-import * as audio from "./audio.js";
+import * as main from "./main";
+import * as audio from "./audio";
 
 window.onload = () => {
 	console.log("window.onload called");
