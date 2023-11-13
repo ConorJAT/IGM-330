@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   <title>Audio Visualizer</title>
-  <link href="./styles/default-styles.css" type="text/css" rel="stylesheet" />
+  <link href="./styles/default-styles.css" type="text/css" rel="stylesheet">
   <script src="./dist/bundle.js" type="module"></script>
 </head>
 
@@ -17,7 +17,7 @@
     <canvas width="1080" height="720"></canvas>
 
     <div id="controls">
-      <section>
+      <div class="controls-sub">
         <button id="btn-play" data-playing="no"></button>
         <button id="btn-fs">Full Screen</button>
 		
@@ -33,13 +33,13 @@
             <option value="time-domain">Byte Time Domain Data</option>
           </select>
         </label>
-      </section>
+      </div>
 		
-      <section id="slider-controls">
+      <div id="slider-controls" class="controls-sub">
         <!-- LOAD SLIDER CONTROLS HERE! -->
-      </section>
+      </div>
 
-      <section>
+      <div class="controls-sub">
         <label>Visual Theme:
           <select id="select-theme">
             <option value="evening" selected>Evening</option>
@@ -49,10 +49,11 @@
             <option value="none">No Gradient</option>
           </select>
         </label>
-        <span><input type="checkbox" checked="true" id="cb-planets"><label for="cb-planets">Show Planets</label></span>
-        <span><input type="checkbox" checked="true" id="cb-core"><label for="cb-core">Show Core</label></span>
+
+        <span><input type="checkbox" id="cb-planets" checked><label for="cb-planets">Show Planets</label></span>
+        <span><input type="checkbox" id="cb-core" checked><label for="cb-core">Show Core</label></span>
         <span><input type="checkbox" id="cb-noise"><label for="cb-noise">Show Noise</label></span>
-      </section>
+      </div>
     </div>
   </main>
 </body>

@@ -14,6 +14,11 @@ canvas {
 #controls{
   margin-left: 1rem;
 }
+
+.controls-sub{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
   
 #label-volume{
   margin-left: 1rem;

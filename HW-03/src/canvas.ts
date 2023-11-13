@@ -6,13 +6,15 @@
 
 // Import from local ts file.
 import * as utils from './utils';
+import Planet from './classes/planet';
+import DrawParams from './interfaces/drawParams.interface';
 
 let ctx,canvasWidth,canvasHeight,gradient,analyserNode,audioData;
 let rotation;
 let canvasSprites = []; 
 
 // Declare DrawParams interface to dictate what gets shown or not.
-let drawParams : utils.DrawParams = {visualData: "frequency", showGradient: true, showPlanets: true, showCircles: true, showNoise: false};
+let drawParams : DrawParams = {visualData: "frequency", showGradient: true, showPlanets: true, showCircles: true, showNoise: false};
 
 
 // Set up the canvas for visualization.
@@ -32,9 +34,9 @@ const setupCanvas = (canvasElement,analyserNodeRef) => {
 	audioData = new Uint8Array(analyserNode.fftSize/2);
 
 	// 5.) - Set up visualizer sprites and rotation value.
-	canvasSprites = [new utils.Planet({xPos: 540, yPos: 620, radius: 184, barWidth: 5, barMaxHeight: 100, barPadding: 4, fillColor: "rgba(14, 111, 128, .9)"}), 
-					 new utils.Planet({xPos: 880, yPos: 300, radius: 120, barWidth: 2.9, barMaxHeight: 60, barPadding: 3, fillColor: "rgba(27, 45, 112, .9)"}), 
-					 new utils.Planet({xPos: 200, yPos: 180, radius: 50, barWidth: 1.4, barMaxHeight: 40, barPadding: 1, fillColor: "rgba(6, 37, 87, .9)"})];
+	canvasSprites = [new Planet({xPos: 540, yPos: 620, radius: 184, barWidth: 5, barMaxHeight: 100, barPadding: 4, fillColor: "rgba(14, 111, 128, .9)"}), 
+					 new Planet({xPos: 880, yPos: 300, radius: 120, barWidth: 2.9, barMaxHeight: 60, barPadding: 3, fillColor: "rgba(27, 45, 112, .9)"}), 
+					 new Planet({xPos: 200, yPos: 180, radius: 50, barWidth: 1.4, barMaxHeight: 40, barPadding: 1, fillColor: "rgba(6, 37, 87, .9)"})];
 	rotation = 0;
 }
 
