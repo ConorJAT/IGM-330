@@ -1,94 +1,58 @@
-/*
-	The purpose of this file is to take in the analyser node and a <canvas> element: 
-	  - the module will create a drawing context that points at the <canvas> 
-	  - it will store the reference to the analyser node
-	  - in draw(), it will loop through the data in the analyser node
-	  - and then draw something representative on the canvas
-	  - maybe a better name for this file/module would be *visualizer.js* ?
-*/
+// The purpose of this file is to take in the analyser node and a <canvas> element: 
+//   - The module will create a drawing context that points at the <canvas> 
+//   - It will store the reference to the analyser node
+//   - In draw(), it will loop through the data in the analyser node
+//   - And then draw something representative on the canvas
 
+// Import from local ts file.
 import * as utils from './utils';
 
 let ctx,canvasWidth,canvasHeight,gradient,analyserNode,audioData;
 let rotation;
 let canvasSprites = []; 
 
-interface DrawParams{
-	visualData    : string,
-	showGradient  : boolean,
-	showPlanets   : boolean,
-	showCircles   : boolean,
-	showNoise     : boolean
-  }
-  
-let drawParams : DrawParams = {visualData: "frequency", showGradient: true, showPlanets: true, showCircles: true, showNoise: false};
+// Declare DrawParams interface to dictate what gets shown or not.
+let drawParams : utils.DrawParams = {visualData: "frequency", showGradient: true, showPlanets: true, showCircles: true, showNoise: false};
 
-const Planet = class{
-	xPos: number;
-	yPos: number;
-	radius: number;
-	barWidth: number;
-	barMaxHeight: number;
-	barPadding: number;
-	fillColor: string;
 
-	constructor({xPos, yPos, radius, barWidth, barMaxHeight, barPadding, fillColor}){
-		Object.assign(this, {xPos, yPos, radius, barWidth, barMaxHeight, barPadding, fillColor});
-	}
-
-	draw(){
-		ctx.fillStyle = this.fillColor;
-		ctx.strokeStyle = "white";
-		ctx.save();
-		ctx.translate(this.xPos, this.yPos);
-		ctx.rotate(rotation);
-		ctx.beginPath();
-		ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
-		ctx.fill();
-		ctx.stroke();
-		ctx.closePath();
-		ctx.restore();
-
-		drawCircularBars(this.xPos, this.yPos, this.radius, this.barWidth, this.barMaxHeight, this.barPadding, "white");
-	}
-
-	changeFillColor(value){
-		this.fillColor = value;
-	}
-};
-
+// Set up the canvas for visualization.
 const setupCanvas = (canvasElement,analyserNodeRef) => {
-	// create drawing context
+	// 1.) - Create drawing context.
 	ctx = canvasElement.getContext("2d");
 	canvasWidth = canvasElement.width;
 	canvasHeight = canvasElement.height;
-	// create a gradient that runs top to bottom
+
+	// 2.) - Create default gradient that runs top to bottom.
 	gradient = utils.getLinearGradient(ctx,0,0,0,canvasHeight,[{percent:0,color:"#00101c"},{percent:.33,color:"#041f3a"},{percent:.67,color:"#083f53"},{percent:1,color:"#239294"}]);
-	// keep a reference to the analyser node
+
+	// 3.) - Store a reference to the analyser node.
 	analyserNode = analyserNodeRef;
-	// this is the array where the analyser data will be stored
+
+	// 4.) - Set up array where the analyser data will be stored.
 	audioData = new Uint8Array(analyserNode.fftSize/2);
 
-
-	canvasSprites = [new Planet({xPos: 540, yPos: 620, radius: 184, barWidth: 5, barMaxHeight: 100, barPadding: 4, fillColor: "rgba(14, 111, 128, .9)"}), 
-					 new Planet({xPos: 880, yPos: 300, radius: 120, barWidth: 2.9, barMaxHeight: 60, barPadding: 3, fillColor: "rgba(27, 45, 112, .9)"}), 
-					 new Planet({xPos: 200, yPos: 180, radius: 50, barWidth: 1.4, barMaxHeight: 40, barPadding: 1, fillColor: "rgba(6, 37, 87, .9)"})];
+	// 5.) - Set up visualizer sprites and rotation value.
+	canvasSprites = [new utils.Planet({xPos: 540, yPos: 620, radius: 184, barWidth: 5, barMaxHeight: 100, barPadding: 4, fillColor: "rgba(14, 111, 128, .9)"}), 
+					 new utils.Planet({xPos: 880, yPos: 300, radius: 120, barWidth: 2.9, barMaxHeight: 60, barPadding: 3, fillColor: "rgba(27, 45, 112, .9)"}), 
+					 new utils.Planet({xPos: 200, yPos: 180, radius: 50, barWidth: 1.4, barMaxHeight: 40, barPadding: 1, fillColor: "rgba(6, 37, 87, .9)"})];
 	rotation = 0;
 }
 
+
+// Draw elements to the canvas.
 const draw = () => {
-  	// 1 - populate the audioData array with the frequency data from the analyserNode
+  	// 1.) - Populate the audioData array with the frequency (or time domain) data from the analyserNode.
 	if (drawParams.visualData == "frequency") analyserNode.getByteFrequencyData(audioData);
 	else if (drawParams.visualData == "time-domain") analyserNode.getByteTimeDomainData(audioData);
 	
-	// 2 - draw background
+	// 2.) - Draw the background.
 	ctx.save();
 	ctx.fillStyle = "black";
 	ctx.globalAlpha = .1;
 	ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 	ctx.restore();
 		
-	// 3 - draw gradient
+	// 3.) - Draw the gradient.
 	if(drawParams.showGradient){
 		ctx.save();
 		ctx.fillStyle = gradient;
@@ -97,17 +61,12 @@ const draw = () => {
 		ctx.restore();
 	}
 
-	// 4 - draw bars
-	// if(params.showBars){
-	// }
-
-	// 5 - draw circles
+	// 4.) - Draw center beat circles.
 	if(drawParams.showCircles){
 		let maxRadius = canvasHeight/4;
 		ctx.save();
 		ctx.globalAlpha = .5;
 		for (let i = 0; i<audioData.length; i++) {
-			// red-ish circles
 			let percent = audioData[i] / 255;
 
 			let circleRadius = percent * maxRadius;
@@ -134,38 +93,35 @@ const draw = () => {
 		ctx.restore();
 	}
 
-	// 6 - bitmap manipulation
-	// A) grab all of the pixels on the canvas and put them in the `data` array
-	// `imageData.data` is a `Uint8ClampedArray()` typed array that has 1.28 million elements!
-	// the variable `data` below is a reference to that array 
+	// 5.) - Draw visual noise via bitmap manipulation.
+	// 5A.) - Grab all of the pixels on the canvas and put them in the `data` array.
 	let imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
 	let data = imageData.data;
 	let length = data.length;
 	let width = imageData.width;
 
-	// B) Iterate through each pixel, stepping 4 elements at a time (which is the RGBA for 1 pixel)
+	// 5B.) - Iterate through each pixel, stepping 4 elements at a time.
 	for (let i = 0; i < length; i += 4){ 
 
-		// C) randomly change every 20th pixel to red
+		// 5C.) - Randomly change every 20th pixel to white.
 		if (drawParams.showNoise && Math.random() < .05){		
-			// data[i] is the red channel
-			// data[i+1] is the green channel
-			// data[i+2] is the blue channel
-			// data[i+3] is the alpha channel
-			data[i] = data[i+1] = data[i+2] = 0; // zero out the red and green and blue channels
+			data[i] = data[i+1] = data[i+2] = 0;
 			data[i] = 255;
 			data[i+1] = 255;
 			data[i+2] = 255;
-		} // end if
-	} // end for
+		}
+	}
 
-	// D) copy image data back to canvas
+	// 5D.) - Copy image data back to canvas.
 	ctx.putImageData(imageData, 0, 0);
 
+	// 6.) - Draw the sprites and alter rotation value.
 	if (drawParams.showPlanets) for (let s of canvasSprites) s.draw();
 	rotation -= 0.01;
 }
 
+
+// Draws beat bars that encircle and rotate for the sprites.
 const drawCircularBars = (xStart, yStart, radialOffset, barWidth, maxBarHeight, barPadding, fillColor) => {
 	ctx.fillStyle = fillColor;
 	ctx.strokeStyle = "black";
@@ -193,9 +149,12 @@ const drawCircularBars = (xStart, yStart, radialOffset, barWidth, maxBarHeight, 
 	ctx.restore();
 };
 
+
+// Changes the visual theme (gradient and sprites).
 const changeTheme = (value) => {
 	if (value != "none") drawParams.showGradient = true;
 	
+	// Set to evening theme colors.
 	if (value == "evening") {
 		gradient = utils.getLinearGradient(ctx,0,0,0,canvasHeight,[{percent:0,color:"#00101c"},{percent:.33,color:"#041f3a"},{percent:.67,color:"#083f53"},{percent:1,color:"#239294"}]);
 		canvasSprites[0].changeFillColor("rgba(14, 111, 128, .9)");
@@ -203,12 +162,15 @@ const changeTheme = (value) => {
 		canvasSprites[2].changeFillColor("rgba(6, 37, 87, .9)");
 	}
 	
+	// Set to midnight theme colors.
 	else if (value == "midnight"){
 		gradient = utils.getLinearGradient(ctx,0,0,0,canvasHeight,[{percent:0,color:"#070707"},{percent:.5,color:"#1D1D25"},{percent:1,color:"#263242"}]);
 		canvasSprites[0].changeFillColor("rgba(48, 68, 92, 0.9)");
 		canvasSprites[1].changeFillColor("rgba(42, 42, 56, 0.9)");
 		canvasSprites[2].changeFillColor("rgba(35, 35, 43, 0.9)");
 	} 
+
+	// Set to morning theme colors.
 	else if (value == "morning") {
 		gradient = utils.getLinearGradient(ctx,0,0,0,canvasHeight,[{percent:0,color:"#0087A5"},{percent:.33,color:"#7FACB2"},{percent:.67,color:"#D4C6AB"},{percent:1,color:"#FAAD51"}]);
 		canvasSprites[0].changeFillColor("rgba(245, 186, 118, 0.9)");
@@ -216,12 +178,15 @@ const changeTheme = (value) => {
 		canvasSprites[2].changeFillColor("rgba(15, 141, 166, 0.9)");
 	}
 
+	// Set to afternoon theme colors.
 	else if (value == "afternoon") {
 		gradient = utils.getLinearGradient(ctx,0,0,0,canvasHeight,[{percent:0,color:"#3B589E"},{percent:.33,color:"#6A719F"},{percent:.67,color:"#B28393"},{percent:1,color:"#EC5065"}]);
 		canvasSprites[0].changeFillColor("rgba(245, 144, 145, 0.9)");
 		canvasSprites[1].changeFillColor("rgba(172, 156, 184, 0.9)");
 		canvasSprites[2].changeFillColor("rgba(95, 122, 194, 0.9)");
 	}
+
+	// Deactivate gradient and set sprites to white.
 	else if (value == "none") {
 		drawParams.showGradient = false;
 		canvasSprites[0].changeFillColor("white");
@@ -229,4 +194,5 @@ const changeTheme = (value) => {
 		canvasSprites[2].changeFillColor("white");
 	}	
 }
-export {setupCanvas,draw,changeTheme,drawParams};
+
+export {setupCanvas,draw,changeTheme,drawParams,ctx,rotation,drawCircularBars};
