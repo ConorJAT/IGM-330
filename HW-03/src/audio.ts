@@ -1,3 +1,6 @@
+// Import from local ts file.
+import AudioSettings from "./interfaces/audioSettings.interface";
+
 // 1.) - Declare WebAudio context.
 let audioCtx;
 
@@ -6,14 +9,11 @@ let element, sourceNode, analyserNode, gainNode;
 let highShelfbiquadFilter, lowShelfBiquadFilter;
 
 // 3.) - Create default values.
-const DEFAULTS = Object.freeze({
-    gain        :   .5,
-    numSamples  :   256
-});
+const defaults : AudioSettings = {gain : 0.5, numSamples : 256};
 
 // 4.) - Create a new array of 8-bit integers (0-255).
 // This is a typed array to hold the audio frequency data.
-let audioData = new Uint8Array(DEFAULTS.numSamples/2);
+let audioData = new Uint8Array(defaults.numSamples/2);
 
 // Sets up web audio for the visualizer.
 const setupWebAudio = (filepath) => {
@@ -34,7 +34,7 @@ const setupWebAudio = (filepath) => {
     analyserNode = audioCtx.createAnalyser();
 
     // 6.) - Apply fft (Fast Fourier Transform) to the analyser node.
-    analyserNode.fftSize = DEFAULTS.numSamples;
+    analyserNode.fftSize = defaults.numSamples;
 
     // 7.) - Create high shelf biquad (treble) filter.
     highShelfbiquadFilter = audioCtx.createBiquadFilter();
@@ -48,7 +48,7 @@ const setupWebAudio = (filepath) => {
 
     // 9.) - Create gain (volume) node.
     gainNode = audioCtx.createGain();
-    gainNode.gain.value = DEFAULTS.gain;
+    gainNode.gain.value = defaults.gain;
 
     // 10.) - Connect the nodes and create the audio graph.
     sourceNode.connect(highShelfbiquadFilter);

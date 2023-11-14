@@ -5,14 +5,15 @@
 import * as utils from './utils';
 import * as audio from './audio';
 import * as canvas from './canvas';
+import DefaultAudio from './interfaces/defaultAudio.interface';
 
 // Set default audio.
-const DEFAULTS = Object.freeze({ sound1 : "media/DifferentHeaven&SianArea-FeelLikeHorrible.mp3" });
+const defaults : DefaultAudio = {audio : "media/DifferentHeaven&SianArea-FeelLikeHorrible.mp3"};
 
 
 // Initialize the program.
 const init = () => {
-  audio.setupWebAudio(DEFAULTS.sound1);
+  audio.setupWebAudio(defaults.audio);
 
   // Set up <canvas> element.
 	let canvasElement = document.querySelector("canvas");
