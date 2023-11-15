@@ -28,3 +28,6 @@ spinning effect with the beat bars was a bit of a challenge. Aside from that, I 
 planned to implement more gradient colors, actual images and on-canvas text the user could
 see, but unfortunately hadn't gotten around to it due to non-academic personal obstacles.
 Of the work I did, I would grade myself somewhere between a 3% - 5% on my "extra" work.
+
+Headphone Logo: photo3idea_studio (on Flaticon)
+https://www.flaticon.com/free-icon/headphone_2904780?term=audio&related_id=2904780

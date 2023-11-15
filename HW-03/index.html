@@ -5,10 +5,32 @@
   <meta charset="utf-8">
   <title>Audio Visualizer</title>
   <link href="./styles/default-styles.css" type="text/css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <script src="./dist/bundle.js" type="module"></script>
 </head>
 
 <body>
+  <nav class="navbar has-shadow is-white">
+    <div class="navbar-brand">
+      <a class="navbar-item">
+        <img src="images/headphone-logo.png" alt="Page Logo" style="max-height: 70px;" class="py-2 px-2">
+      </a>
+
+      <a class="navbar-burger" id="burger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </a>
+    </div>
+
+    <div class="navbar-menu" id="nav-links">
+      <div class="navbar-start">
+        <a href="about.html" class="navbar-item">About The App</a>
+        <a class="navbar-item is-active">See The App</a>
+      </div>
+    </div>
+  </nav>
+
   <main>
     <header>
       <!-- LOAD HEADER CONTENT HERE! -->

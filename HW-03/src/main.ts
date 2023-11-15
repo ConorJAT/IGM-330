@@ -117,6 +117,13 @@ const setupUI = (canvasElement) => {
     const target = e.target as HTMLSelectElement;
     canvas.changeTheme(target.value);
   }
+
+  // 7.) - Set up navbar mobile menu.
+  const burgerIcon = document.querySelector("#burger") as HTMLBodyElement;
+  const navbarMenu = document.querySelector("#nav-links") as HTMLBodyElement;
+
+  // 7A.) - Add onclick to mobile menu.
+  burgerIcon.onclick = () => { navbarMenu.classList.toggle('is-active'); };
 };
 
 
