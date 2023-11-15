@@ -3,7 +3,7 @@ body {
   font-family: tahoma, verdana, sans serif;
 }
   
-canvas {
+/* canvas {
   margin-left: 1rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -36,7 +36,7 @@ section{
 #btn-fs{
   font-size: 1.2rem;
   width: 8rem;
-}
+} */
 
 button[data-playing="yes"]:after{
   content: "Pause";

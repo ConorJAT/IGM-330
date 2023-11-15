@@ -56,7 +56,7 @@ window.onload = () => {
 		setupSliderUI();
 
 		// 2F.) - Load header region of application.
-		document.querySelector("header").innerHTML = `<h1>${json.title}</h1><p>${json.instructions}</p>`;
+		document.querySelector("header").innerHTML = `<h1 class="title">${json.title}</h1><p class="is-size-5">${json.instructions}</p>`;
 	};
 
 	// 3.) - Set up the slider UI on the page.

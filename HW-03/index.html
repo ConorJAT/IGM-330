@@ -32,14 +32,16 @@
   </nav>
 
   <main>
-    <header>
+    <header class="section py-4">
       <!-- LOAD HEADER CONTENT HERE! -->
     </header>
 
-    <canvas width="1080" height="720"></canvas>
+    <section class="section py-2">
+      <canvas width="1080" height="720"></canvas>
+    </section>
 
     <div id="controls">
-      <div class="controls-sub">
+      <div class="section py-2">
         <button id="btn-play" data-playing="no"></button>
         <button id="btn-fs">Full Screen</button>
 		
@@ -57,11 +59,11 @@
         </label>
       </div>
 		
-      <div id="slider-controls" class="controls-sub">
+      <div id="slider-controls" class="section py-2">
         <!-- LOAD SLIDER CONTROLS HERE! -->
       </div>
 
-      <div class="controls-sub">
+      <div class="section py-2">
         <label>Visual Theme:
           <select id="select-theme">
             <option value="evening" selected>Evening</option>
