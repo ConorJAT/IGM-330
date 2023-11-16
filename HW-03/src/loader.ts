@@ -41,13 +41,14 @@ window.onload = () => {
 		document.querySelector("#select-track").innerHTML = trackList;
 
 		// 2D.) - Load slider controls.
-		let controlList = "| ";
+		let controlList = "";
 		let controls = json.controls;
 
-		for(let c of controls){
-			controlList += `${c["control-name"]}: <input type=range id=${c["control-id"]} min=${c["control-min"]} max=${c["control-max"]} value=${c["control-value"]} step=0.01>`;
-			controlList += `<span id=${c["control-label"]}>???</span>`;
-			controlList += " | ";
+		for(let c = 0; c < controls.length; c++)
+		{
+			controlList += `${controls[c]["control-name"]}: <input type=range id=${controls[c]["control-id"]} min=${controls[c]["control-min"]} max=${controls[c]["control-max"]} value=${controls[c]["control-value"]} step=0.01>`;
+			controlList += `<span id=${controls[c]["control-label"]}>???</span>`;
+			if (c < controls.length - 1) { controlList += " | "; }
 		}
 
 		document.querySelector("#slider-controls").innerHTML = controlList;
