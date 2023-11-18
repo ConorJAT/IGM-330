@@ -1,33 +1,22 @@
-Audio Effects:
+Coding Language / Bundling:
 
-For the audio effects, I simply implemented both bass and treble using the
-biquad filters. Both of these effects are controlled by sliders and start
-at a value of 0 upon loading.
+For the coding aspect of this project, I decided to utilize Typescript.
 
 
-Sprites:
+Code Changes Implemented:
 
-In my canvas.js script, I created a sprite class called "Planet". This sprite
-essentially draws an arc with beat rectangles surrounding its edge. Additionally,
-the planets spin slowly counterclockwise, giving a cool planet spin effect.
-
-
-JSON App Data:
-
-In my JSON file, I decided to store data including: the app's title, an entire
-list of all my tracks, my settings for my slider controls and information section.
+Using Typescript, I implemented several notable changes. First, I moved both my sprite class
+and any newly created interfaces into their own individual folders and imported them where
+necessary. Regarding the new interfaces, I converted my drawing parameters, in addition to any
+visualizer default values into separate interfaces in order to not have to worry about managing
+them in the primary Typescript files. Lastly, I spent some time strongly typing many of my variables
+(especially my HTML elements) in order to accustom to the Typescript format.
 
 
-My Own Improvements:
+Images Utilized:
 
-I wasn't able to add a lot of "outstanding" aesthetics to my audio visualizer
-unfortunately. What I do have involves a theme selector, allowing the user to change
-the theme of the app to something more pleasing (based off of times of day). Additionally,
-I'd like to consider my Sprites to be something a little above and beyond as getting the
-spinning effect with the beat bars was a bit of a challenge. Aside from that, I originally
-planned to implement more gradient colors, actual images and on-canvas text the user could
-see, but unfortunately hadn't gotten around to it due to non-academic personal obstacles.
-Of the work I did, I would grade myself somewhere between a 3% - 5% on my "extra" work.
-
-Headphone Logo: photo3idea_studio (on Flaticon)
+Headphone Logo/Favicon: photo3idea_studio (on Flaticon)
 https://www.flaticon.com/free-icon/headphone_2904780?term=audio&related_id=2904780
+
+Audio Visual Sample: SuttleMedia (on Pixabay)
+https://pixabay.com/illustrations/ai-generated-waves-frequency-8184468/
