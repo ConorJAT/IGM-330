@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Firebase Admin</title>
+</head>
+<body>
+<h1>High Scores</h1>
+<ul id="scoresList"><li>No data yet!</li></ul>
+
+<script type="module">
+/* #1 - The Firebase setup code goes here  - both imports, `firebaseConfig` and `app` */
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+import { getDatabase, ref, set, push, onValue } from  "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCY0ODmP0IOSJwHcF9NLIAacEks3zOSog8",
+  authDomain: "high-scores-d8764.firebaseapp.com",
+  projectId: "high-scores-d8764",
+  storageBucket: "high-scores-d8764.appspot.com",
+  messagingSenderId: "951012188225",
+  appId: "1:951012188225:web:0f0c2c7f009870785de6c0"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+console.log(app); // make sure firebase is loaded
+
+// #2 NEW STUFF
+const db = getDatabase();
+const scoresRef = ref(db, 'scores');
+
+const scoresChanged = (snapshot) => {
+  let html = '';
+  snapshot.forEach(score => {
+    const childKey = score.key;
+    const childData = score.val();
+
+    html += `<li>${childData.userId}\t\t - ${childData.game}\t - ${childData.score}</li>`;
+
+    console.log(childKey,childData);
+  });
+
+  document.querySelector("#scoresList").innerHTML = html;
+}
+
+onValue(scoresRef,scoresChanged, {onlyOnce: false});
+
+
+const madmaxChanged = (data) => {
+    let obj = data.val();
+    console.log("scores2/ - madmaxChanged", obj);
+    console.log("game = ", obj.game);
+    console.log("score = ", obj.score);
+  };
+
+const scoresRef2 = ref(db, 'scores2/MADMAX');
+onValue(scoresRef2,madmaxChanged);
+</script>
+</body>
+</html>
