@@ -32,7 +32,18 @@ const setupUI = () => {
 	};
 }
 
-const showFeatureDetails = (id) => { console.log(`showFeatureDetails - id=${id}`); };
+const getFeatureById = (id) => { return geojson.features.find((feature) => feature.id === id); };
+
+const showFeatureDetails = (id) => { 
+	console.log(`showFeatureDetails - id=${id}`); 
+
+	const feature = getFeatureById(id);
+	document.querySelector("#details-1").innerHTML = `Info for ${feature.properties.title}`;
+	document.querySelector("#details-2").innerHTML = `
+		<p><b>Address: </b>${feature.properties.address}</p>
+		<p><b>Phone: </b><a href="tel:${feature.properties.phone}">${feature.properties.phone}</a></p>
+		<p><b>Website: </b><a href="${feature.properties.url}">${feature.properties.url}</a></p>`;
+};
 
 const init = () => {
 	map.initMap(lnglatNYS);
