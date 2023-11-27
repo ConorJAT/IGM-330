@@ -51,7 +51,7 @@ const setupUI = () => {
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray
 // ... and if you didn't, set `items` to an empty array
 const init = () => {
-  if (storage.readFromLocalStorage("ctr9664").isArray) { items = storage.readFromLocalStorage("ctr9664"); }
+  if (Array.isArray(storage.readFromLocalStorage("ctr9664"))) { items = storage.readFromLocalStorage("ctr9664"); }
   else { items = []; }
 
   showItems();
