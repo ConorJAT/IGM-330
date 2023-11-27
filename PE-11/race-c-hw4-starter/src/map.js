@@ -37,8 +37,37 @@ const initMap = (center) => {
 		zoom: 5.2
 	});
 	map.addControl(new mapboxgl.NavigationControl({showCompass:false}));
+
+	// test
+	const clickHandler = (id) => alert(`${id} was clicked!`);
+	addMarker(geojson.features[0], "poi", clickHandler);
 };
 
+const addMarker = (feature, className, clickHandler) => {
+	// A.) Create map marker using feature (i.e: Park) data.
+	// - Marker is a <div>
+	// - <div> classname will be 'poi' (see default-styles.css)
+	// - Will give the <div> an id of 'feature'
+	const el = document.createElement('div');
+	el.className = className;
+	el.id = feature.id;
+
+	// B.) Write HTML for the popup.
+	const html = `
+	<b>${feature.properties.title}</b>
+	<p>${feature.properties.address}</p>
+	<p><b>Phone: </b>${feature.properties.phone}</p>`;
+
+	// C.) Make marker, add popup and add to map.
+	const marker = new mapboxgl.Marker(el)
+		.setLngLat(feature.geometry.coordinates)
+		.setPopup(new mapboxgl.Popup({ offset: 10 })
+		.setHTML(html))
+		.addTo(map);
+
+	// D.) Call method when marker is clicked on.
+	el.addEventListener("click", () => clickHandler(marker._element.id));
+};
 
 // III. "public" - will be exported
 
