@@ -37,10 +37,6 @@ const initMap = (center) => {
 		zoom: 5.2
 	});
 	map.addControl(new mapboxgl.NavigationControl({showCompass:false}));
-
-	// test
-	const clickHandler = (id) => alert(`${id} was clicked!`);
-	addMarker(geojson.features[0], "poi", clickHandler);
 };
 
 const addMarker = (feature, className, clickHandler) => {
@@ -70,7 +66,12 @@ const addMarker = (feature, className, clickHandler) => {
 };
 
 // III. "public" - will be exported
+const addMarkersToMap = (json, clickHandler) => {
+	geojson = json;	// Replace default hard-coded JSON data.
 
+	// Loop through features array and for each one, add a marker to the map.
+	for (const feature of geojson.features){ addMarker(feature, "poi", clickHandler); }
+};
 
 const flyTo = (center = [0,0]) => {
 	//https://docs.mapbox.com/mapbox-gl-js/api/#map#flyto
@@ -89,4 +90,4 @@ const setPitchAndBearing = (pitch=0,bearing=0) => {
 	map.setBearing(bearing);
 };
 
-export { initMap, flyTo, setZoomLevel, setPitchAndBearing };
+export { initMap, addMarkersToMap, flyTo, setZoomLevel, setPitchAndBearing };
