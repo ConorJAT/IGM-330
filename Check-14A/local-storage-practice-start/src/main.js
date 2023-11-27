@@ -15,7 +15,7 @@ const showItems = () => {
 // II. declare and implement addItem(str)
 // - this will add `str` to the `items` array (so long as `str` is length greater than 0)
 const addItem = str => {
-  if (str) items.push(str);
+  if (str) { items.push(str); }
 };
 
 
@@ -24,10 +24,19 @@ const addItem = str => {
 // - and be sure to update .localStorage by calling `writeToLocalStorage("items",items)`
 const setupUI = () => {
   const addButton = document.querySelector("#btn-add");
+  const clearButton = document.querySelector("#btn-clear");
+  let input = document.querySelector("#thing-text");
 
   addButton.onclick = () => {
-    let input = document.querySelector("#thing-text");
     addItem(input.value);
+    input.value = "";
+    showItems();
+
+    storage.writeToLocalStorage("ctr9664", items);
+  };
+
+  clearButton.onclick = () => {
+    items = [];
     input.value = "";
     showItems();
 
@@ -42,7 +51,7 @@ const setupUI = () => {
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray
 // ... and if you didn't, set `items` to an empty array
 const init = () => {
-  if (storage.readFromLocalStorage("ctr9664")) { items = storage.readFromLocalStorage("ctr9664"); }
+  if (storage.readFromLocalStorage("ctr9664").isArray) { items = storage.readFromLocalStorage("ctr9664"); }
   else { items = []; }
 
   showItems();
