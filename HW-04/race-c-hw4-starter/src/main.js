@@ -42,10 +42,27 @@ const showFeatureDetails = (id) => {
 
 	const feature = getFeatureById(id);
 	document.querySelector("#details-1").innerHTML = `Info for ${feature.properties.title}`;
-	document.querySelector("#details-2").innerHTML = `
+
+	let parkInfo = `
 		<p><b>Address: </b>${feature.properties.address}</p>
 		<p><b>Phone: </b><a href="tel:${feature.properties.phone}">${feature.properties.phone}</a></p>
-		<p><b>Website: </b><a href="${feature.properties.url}">${feature.properties.url}</a></p>`;
+		<p><b>Website: </b><a href="${feature.properties.url}">${feature.properties.url}</a></p>
+		<div class="control">`;
+	
+	if (favoriteIds.includes(id)){
+		parkInfo += `
+			<button id="btn-fav" class="button is-success" disabled>Favorite</button>
+			<button id="btn-del" class="button is-warning">Delete</button>`;
+	}
+	else {
+		parkInfo += `
+			<button id="btn-fav" class="button is-success">Favorite</button>
+			<button id="btn-del" class="button is-warning" disabled>Delete</button>`;
+	}
+
+	parkInfo += `</div>`;
+	document.querySelector("#details-2").innerHTML = parkInfo;
+
 	document.querySelector("#details-3").innerHTML = `
 		<p>${feature.properties.description}</p>`;
 };
