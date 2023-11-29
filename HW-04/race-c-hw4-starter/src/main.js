@@ -5,7 +5,7 @@ import * as ajax from "./ajax.js";
 // NB - it's easy to get [longitude,latitude] coordinates with this tool: http://geojson.io/
 const lnglatNYS = [-75.71615970715911, 43.025810763917775];
 const lnglatUSA = [-98.5696, 39.8282];
-let favoriteIds = ["p20","p79","p180","p43"];
+let favoriteIds = [];
 let geojson;
 
 
@@ -47,17 +47,31 @@ const showFeatureDetails = (id) => {
 		<p><b>Address: </b>${feature.properties.address}</p>
 		<p><b>Phone: </b><a href="tel:${feature.properties.phone}">${feature.properties.phone}</a></p>
 		<p><b>Website: </b><a href="${feature.properties.url}">${feature.properties.url}</a></p>
-		<div class="control">`;
+		<div class="control py-4">`;
 	
 	if (favoriteIds.includes(id)){
 		parkInfo += `
-			<button id="btn-fav" class="button is-success" disabled>Favorite</button>
-			<button id="btn-del" class="button is-warning">Delete</button>`;
+			<button id="btn-fav" class="button is-success" disabled>
+				<span class="icon"><i class="fas fa-add"></i></span>
+				<span>Favorite</span>
+			</button>
+
+			<button id="btn-del" class="button is-warning">
+				<span>Delete</span>
+				<span class="icon"><i class="fas fa-trash"></i></span>
+			</button>`;
 	}
 	else {
 		parkInfo += `
-			<button id="btn-fav" class="button is-success">Favorite</button>
-			<button id="btn-del" class="button is-warning" disabled>Delete</button>`;
+			<button id="btn-fav" class="button is-success">
+				<span class="icon"><i class="fas fa-add"></i></span>
+				<span>Favorite</span>
+			</button>
+			
+			<button id="btn-del" class="button is-warning" disabled>
+				<span>Delete</span>
+				<span class="icon"><i class="fas fa-trash"></i></span>
+			</button>`;
 	}
 
 	parkInfo += `</div>`;
@@ -65,6 +79,22 @@ const showFeatureDetails = (id) => {
 
 	document.querySelector("#details-3").innerHTML = `
 		<p>${feature.properties.description}</p>`;
+
+	document.querySelector("#btn-fav").onclick = (e) => {
+		if(!favoriteIds.includes(id)) {
+			favoriteIds.push(id);
+			refreshFavorites();
+			e.target.disabled = true;
+			document.querySelector("#btn-del").disabled = false;
+		}
+	};
+
+	document.querySelector("#btn-del").onclick = (e) => {
+		favoriteIds = favoriteIds.filter((element) => element != id);
+		refreshFavorites();
+		e.target.disabled = true;
+		document.querySelector("#btn-fav").disabled = false;
+	};
 };
 
 const createFavoriteElement = (id) => {
