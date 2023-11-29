@@ -1,5 +1,6 @@
 import * as map from "./map.js";
 import * as ajax from "./ajax.js";
+import * as storage from "./storage.js";
 
 // I. Variables & constants
 // NB - it's easy to get [longitude,latitude] coordinates with this tool: http://geojson.io/
@@ -67,7 +68,7 @@ const showFeatureDetails = (id) => {
 				<span class="icon"><i class="fas fa-add"></i></span>
 				<span>Favorite</span>
 			</button>
-			
+
 			<button id="btn-del" class="button is-warning" disabled>
 				<span>Delete</span>
 				<span class="icon"><i class="fas fa-trash"></i></span>
@@ -83,17 +84,25 @@ const showFeatureDetails = (id) => {
 	document.querySelector("#btn-fav").onclick = (e) => {
 		if(!favoriteIds.includes(id)) {
 			favoriteIds.push(id);
+
 			refreshFavorites();
+			storage.writeToLocalStorage("ctr9664", favoriteIds);
+
 			e.target.disabled = true;
 			document.querySelector("#btn-del").disabled = false;
 		}
 	};
 
 	document.querySelector("#btn-del").onclick = (e) => {
-		favoriteIds = favoriteIds.filter((element) => element != id);
-		refreshFavorites();
-		e.target.disabled = true;
-		document.querySelector("#btn-fav").disabled = false;
+		if(favoriteIds.includes(id)){
+			favoriteIds = favoriteIds.filter((element) => element != id);
+
+			refreshFavorites();
+			storage.writeToLocalStorage("ctr9664", favoriteIds);
+
+			e.target.disabled = true;
+			document.querySelector("#btn-fav").disabled = false;
+		}
 	};
 };
 
@@ -124,6 +133,9 @@ const refreshFavorites = () => {
 };
 
 const init = () => {
+	if (Array.isArray(storage.readFromLocalStorage("ctr9664"))) { favoriteIds = storage.readFromLocalStorage("ctr9664"); }
+  	else { favoriteIds = []; }
+	
 	map.initMap(lnglatNYS);
 	ajax.downloadFile("data/parks.geojson", (str) => {
 		geojson = JSON.parse(str);
