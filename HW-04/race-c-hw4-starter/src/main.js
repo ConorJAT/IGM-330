@@ -88,7 +88,7 @@ const showFeatureDetails = (id) => {
 			refreshFavorites();
 			storage.writeToLocalStorage("ctr9664", favoriteIds);
 
-			e.target.disabled = true;
+			document.querySelector("#btn-fav").disabled = true;
 			document.querySelector("#btn-del").disabled = false;
 		}
 	};
@@ -100,7 +100,7 @@ const showFeatureDetails = (id) => {
 			refreshFavorites();
 			storage.writeToLocalStorage("ctr9664", favoriteIds);
 
-			e.target.disabled = true;
+			document.querySelector("#btn-del").disabled = true;
 			document.querySelector("#btn-fav").disabled = false;
 		}
 	};
