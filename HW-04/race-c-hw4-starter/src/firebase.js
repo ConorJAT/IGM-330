@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
 import { getDatabase, ref, set, push, onValue, increment } from  "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
 
-// Your web app's Firebase configuration
+// Web app Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCY0ODmP0IOSJwHcF9NLIAacEks3zOSog8",
     authDomain: "high-scores-d8764.firebaseapp.com",
@@ -18,6 +18,7 @@ const firebaseConfig = {
 
   const likedParksPath = "fav-parks/";
 
+  // Pushes new liked park data to Firebase cloud
   const pushLikedParkToCloud = (park, counterValue) => {
     const favRef = ref(db, `${likedParksPath}${park.id}`);
     set(favRef, {
@@ -27,4 +28,18 @@ const firebaseConfig = {
     });
   };
 
-  export { db, ref, set, push, onValue, pushLikedParkToCloud };
+  // Updates display list of parks and their likes data
+  const updateLikedParkList = (snapshot) => {
+    let favParks = document.querySelector("#fav-parks-list");
+    favParks.innerHTML = "";
+
+    snapshot.forEach(fav => {
+      const parkKey = fav.key;
+      const parkData = fav.val();
+      console.log(parkKey, parkData);
+  
+      favParks.innerHTML += `<li class="has-text-light ml-5 mb-2"><b>${parkData.name} (${parkData.id})</b> - Likes: ${parkData.likes}</li>`;
+    });
+  };
+
+  export { db, likedParksPath, ref, set, push, onValue, pushLikedParkToCloud, updateLikedParkList };
