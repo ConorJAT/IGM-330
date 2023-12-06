@@ -28,6 +28,14 @@ const firebaseConfig = {
     });
   };
 
+  const manualParkLike = (park, isDecrement) => {
+    if(park){
+      let incrementVal = 1;
+      if(isDecrement) incrementVal *= -1;
+      pushLikedParkToCloud(park, incrementVal);
+    }
+  };
+
   // Updates display list of parks and their likes data
   const updateLikedParkList = (snapshot) => {
     let favParks = document.querySelector("#fav-parks-list");
@@ -42,4 +50,4 @@ const firebaseConfig = {
     });
   };
 
-  export { db, likedParksPath, ref, set, push, onValue, pushLikedParkToCloud, updateLikedParkList };
+  export { db, likedParksPath, ref, set, push, onValue, pushLikedParkToCloud, manualParkLike, updateLikedParkList };

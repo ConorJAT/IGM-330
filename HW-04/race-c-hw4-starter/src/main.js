@@ -149,3 +149,5 @@ const init = () => {
 };
 
 init();
+
+export {getFeatureById};
