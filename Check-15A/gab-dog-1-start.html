@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>GabDog</title>
+  <style>
+    *{
+      font-family: sans-serif;
+    }
+  </style>
+  <script type="module">
+
+// TODO: ADD YOUR imports and Firebase setup code HERE
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+import { getDatabase, ref, set, push, onValue, increment } from  "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCY0ODmP0IOSJwHcF9NLIAacEks3zOSog8",
+  authDomain: "high-scores-d8764.firebaseapp.com",
+  projectId: "high-scores-d8764",
+  storageBucket: "high-scores-d8764.appspot.com",
+  messagingSenderId: "951012188225",
+  appId: "1:951012188225:web:0f0c2c7f009870785de6c0"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+console.log(app);
+
+
+const writeFavNameData = name => {
+  const db = getDatabase();
+  const favRef = ref(db, 'favorites/' + name);
+  set(favRef, {
+      name,
+      likes: increment(1)
+  });
+};
+
+const favoritesChanged = (snapshot) => {
+  // TODO: clear #favoritesList
+  favoritesList.innerHTML = "";
+  snapshot.forEach(fav => {
+    const childKey = fav.key;
+    const childData = fav.val();
+    console.log(childKey,childData);
+
+    // TODO: update #favoritesList
+    favoritesList.innerHTML += `<li><b>${childData.name}</b> - Likes: ${childData.likes}</li>`
+  });
+};
+
+const init = () => {
+  const db = getDatabase();
+  const favoritesRef = ref(db, 'favorites/');
+  onValue(favoritesRef,favoritesChanged);
+	
+  btnSubmit.onclick = () => {
+    writeFavNameData(nameField.value);
+  };
+};
+
+init();
+
+</script>
+</head>
+<body>
+  <h1>GabDog&trade;</h1>
+  <h3>We want to know - what's a good dog name?</h3>
+  <p>Name --> <input value="Rover" id="nameField"></p>
+  <button id="btnSubmit">Send Name to Server</button>
+  <hr>
+  <h3>Popular Names</h3>
+  <ol id="favoritesList"></ol>
+ </body>
+</html>
