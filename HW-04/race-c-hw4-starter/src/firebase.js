@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
-import { getDatabase, ref, set, get, update, push, onValue } from  "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+import { getDatabase, ref, set, push, onValue, increment } from  "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -13,15 +13,18 @@ const firebaseConfig = {
   
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
+  console.log(app);
+  const db = getDatabase();
 
-  const addNewFavoritePark = (parkId, name, likes) => {
-    const db = getDatabase();
-    const dbPath = ref(db, 'park-favorites/' + parkId);
-    push(dbPath, {
-        parkId,
-        name,
-        likes
+  const likedParksPath = "fav-parks/";
+
+  const pushLikedParkToCloud = (park, counterValue) => {
+    const favRef = ref(db, `${likedParksPath}${park.id}`);
+    set(favRef, {
+      id: park.id,
+      name: park.properties.title,
+      likes: increment(counterValue)
     });
   };
 
-  export { getDatabase, ref, set, get, update, push, onValue, addNewFavoritePark };
+  export { db, ref, set, push, onValue, pushLikedParkToCloud };
