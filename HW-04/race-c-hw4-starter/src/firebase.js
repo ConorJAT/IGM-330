@@ -28,11 +28,14 @@ const firebaseConfig = {
     });
   };
 
-  const manualParkLike = (park, isDecrement) => {
-    if(park){
+  // Pushed new liked park data manually via button press on admin page.
+  const manualParkLike = (geojson, park, isDecrement) => {
+    let feature = geojson.features.find((feature) => feature.id === park);
+
+    if(feature){
       let incrementVal = 1;
       if(isDecrement) incrementVal *= -1;
-      pushLikedParkToCloud(park, incrementVal);
+      pushLikedParkToCloud(feature, incrementVal);
     }
   };
 
