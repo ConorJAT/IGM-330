@@ -13,7 +13,6 @@ const firebaseConfig = {
   
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
-  console.log(app);
   const db = getDatabase();
 
   const likedParksPath = "fav-parks/";
@@ -47,7 +46,6 @@ const firebaseConfig = {
     snapshot.forEach(fav => {
       const parkKey = fav.key;
       const parkData = fav.val();
-      console.log(parkKey, parkData);
   
       favParks.innerHTML += `<li class="has-text-light ml-5 mb-2"><b>${parkData.name} (${parkData.id})</b> - Likes: ${parkData.likes}</li>`;
     });

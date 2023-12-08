@@ -40,8 +40,6 @@ const setupUI = () => {
 const getFeatureById = (id) => { return geojson.features.find((feature) => feature.id === id); };
 
 const showFeatureDetails = (id) => { 
-	console.log(`showFeatureDetails - id=${id}`); 
-
 	const feature = getFeatureById(id);
 	document.querySelector("#details-1").innerHTML = `Info for ${feature.properties.title}`;
 
@@ -142,7 +140,6 @@ const init = () => {
 	map.initMap(lnglatNYS);
 	ajax.downloadFile("data/parks.geojson", (str) => {
 		geojson = JSON.parse(str);
-		console.log(geojson);
 		map.addMarkersToMap(geojson, showFeatureDetails);
 		setupUI();
 	});	
